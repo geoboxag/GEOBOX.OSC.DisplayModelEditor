@@ -5,10 +5,11 @@ Tool für das prüfen, bereinigen oder zusammenführen von Darstellungsmodellen 
 Mit diesem Tool können Darstellungsmodelle geprüft und bereinigt werden. Auch ist es möglich zwei Darstellungsmodelle in eines zusammenzuführen.
 
 ## Vorgehen
+Hinweis: Es wird Empfohlen auf einer Kopie der Darstellungsmodelle zu arbeiten oder sicherzustellen, dass ein Backup vorhanden ist.
 ### Darstellungsmodelle prüfen
 - Korrekter Pfad zum Repository Pfad auswählen (das Tool folgt der Logik vom AutoCAD Map 3D)
 - Darstellungsmodell öffnen
-- Prfüungsresultat kontrollieren und bereinigen
+- Prüfungsresultat kontrollieren und bereinigen
 ### Darstellungsmodelle zusammenführen
 - Erstes Darstellungsmodell öffnen
 - Zweites Darstellungsmodell öffnen (ergänzt das erste Darstellungsmodell)
