@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GEOBOX.OSC.DisplayModelEditor.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DMRootPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\_M3D_DisplayModel</Value>
+    </Setting>
+    <Setting Name="LayerDataSourceName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">GBX_DEV_FA</Value>
+    </Setting>
+    <Setting Name="LayerDataServiceName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">topobase</Value>
+    </Setting>
+    <Setting Name="LayerDataMapsysName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MAPSYS</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

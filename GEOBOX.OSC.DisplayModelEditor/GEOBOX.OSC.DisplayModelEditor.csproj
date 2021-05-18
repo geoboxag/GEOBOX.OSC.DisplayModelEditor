@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{68EB236E-9FFD-4111-AE5A-A5BC662BE796}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GEOBOX.OSC.DisplayModelEditor</RootNamespace>
+    <AssemblyName>GEOBOX.OSC.DisplayModelEditor</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\_debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\..\output\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>geobox.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Converters\BoolToImage.cs" />
+    <Compile Include="CorrectionTasks\CorrectionTaskContext.cs" />
+    <Compile Include="CorrectionTasks\CorrectionTaskResult.cs" />
+    <Compile Include="CorrectionTasks\ICorrectionTask.cs" />
+    <Compile Include="CorrectionTasks\ICorrectionTaskContext.cs" />
+    <Compile Include="CorrectionTasks\ICorrectionTaskResult.cs" />
+    <Compile Include="CorrectionTasks\ResetDataSourceCorrectionTask.cs" />
+    <Compile Include="Enums\TaskImage.cs" />
+    <Compile Include="Enums\TaskType.cs" />
+    <Compile Include="IO\LayerReader.cs" />
+    <Compile Include="IO\TbdmmapReader.cs" />
+    <Compile Include="IO\TbdmReader.cs" />
+    <Compile Include="IO\MapXmlWriter.cs" />
+    <Compile Include="DAL\CsvItem.cs" />
+    <Compile Include="DAL\LayerGroup.cs" />
+    <Compile Include="FileHandler\LayerHandler.cs" />
+    <Compile Include="DAL\MissingLayer.cs" />
+    <Compile Include="FileHandler\MissingLayerHandler.cs" />
+    <Compile Include="DAL\Task.cs" />
+    <Compile Include="FileHandler\TbdmFileHandler.cs" />
+    <Compile Include="FileHandler\TbdmItemHandler.cs" />
+    <Compile Include="FileHandler\TbdmmapFileHandler.cs" />
+    <Compile Include="DAL\TbdmmapItem.cs" />
+    <Compile Include="FileHandler\TbdmmapLayerHandler.cs" />
+    <Compile Include="Settings\SettingsController.cs" />
+    <Compile Include="ViewModels\MergeViewModel.cs" />
+    <Compile Include="ViewModels\OneClickViewModel.cs" />
+    <Compile Include="Views\InfoView.xaml.cs">
+      <DependentUpon>InfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MergeView.xaml.cs">
+      <DependentUpon>MergeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OneClickView.xaml.cs">
+      <DependentUpon>OneClickView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\InfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MergeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OneClickView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Includes\merge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Includes\gbLogSuccess16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Includes\gbLogError16.png" />
+    <Resource Include="Includes\GEOBOXSoftwareIcon24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Includes\gbGenRemove24_01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Includes\Open_light_024.png" />
+    <Resource Include="Includes\Refresh_light_024.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Includes\CheckAll_light_016.png" />
+    <Resource Include="Includes\FileExport_light_024.png" />
+    <Resource Include="Includes\UncheckAll_light_016.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="geobox.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
