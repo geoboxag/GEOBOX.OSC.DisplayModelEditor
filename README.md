@@ -1,11 +1,18 @@
 # GEOBOX - Darstellungsmodell Editor
-Tool für das prüfen, bereinigen oder zusammenführen von GEOBOX Darstellungsmodellen für das Autodesk AutoCAD Map 3D.
+Tool für das prüfen, bereinigen oder zusammenführen von Darstellungsmodellen für das Autodesk AutoCAD Map 3D.
 
 ## Beschrieb
 Mit diesem Tool können Darstellungsmodelle geprüft und bereinigt werden. Auch ist es möglich zwei Darstellungsmodelle in eines zusammenzuführen.
 
 ## Vorgehen
-TODO: Vorgehen
+### Darstellungsmodelle prüfen
+- Korrekter Pfad zum Repository Pfad auswählen (das Tool folgt der Logik vom AutoCAD Map 3D)
+- Darstellungsmodell öffnen
+- Prfüungsresultat kontrollieren und bereinigen
+### Darstellungsmodelle zusammenführen
+- Erstes Darstellungsmodell öffnen
+- Zweites Darstellungsmodell öffnen (ergänzt das erste Darstellungsmodell)
+- Darstellungsmodell speichern (Speichert die TBM und TBDMAP Datei)
 
 ## Voraussetzungen und Installation
 ### Voraussetzung
@@ -35,8 +42,6 @@ TODO: Vorgehen
 | 5   | ![][i5]  | Es sind Fehler gefunden worden.                  |
 | 6   | ![][i6]  | Alle Zeilen selektieren.                         |
 | 7   | ![][i7]  | Selektion aller Zeilen aufheben.                 |
-| 8   | ![][i8]  | Rücksetzung der Darstellungsmodell-Selektion.    |
-| 9   | ![][i9]  | Zusammenführen der Darstellungsmodelle.          |
 
 
 [i1]:  _images/FileExport_light_024.png "CSV Export"
@@ -46,5 +51,3 @@ TODO: Vorgehen
 [i5]:  _images/gbLogError16.png "not Ok"
 [i6]:  _images/CheckAll_light_016.png "Check All"
 [i7]:  _images/UncheckAll_light_016.png "Uncheck All"
-[i8]:  _images/gbGenRemove24_01.png "Reset Selection"
-[i9]:  _images/merge.png "Merge DisplayModels"
