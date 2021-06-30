@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?include config.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="$(var.ProductGUID)" Name="!(loc.ProductName) $(var.year)" Language="!(loc.Language)" Codepage="1252" Version="$(var.Version)" Manufacturer="$(var.Manufactor)" UpgradeCode="$(var.UpgradeGUID)">
+    <Package InstallerVersion="200" Manufacturer="$(var.Manufactor)" Description="!(loc.ProductName) $(var.year) $(var.DescriptionInstaller)" Comments="$(var.CommentsInstaller)" Compressed="yes" Languages="!(loc.Language)" InstallScope="perMachine" Platform="x64" />
+    <Condition Message="!(loc.DotNetMsg)">
+      <![CDATA[MsiNetAssemblySupport >= "$(var.MinDotNetVersion)"]]>
+    </Condition>
+    <Upgrade Id="$(var.UpgradeGUID)">
+      <UpgradeVersion Property="PREVIOUSVERSIONSINSTALLED" Minimum="1.0.0" Maximum="$(var.Version)" IncludeMinimum="yes" IncludeMaximum="no" OnlyDetect="no" IgnoreRemoveFailure="no" MigrateFeatures="yes" Language="!(loc.Language)" />
+      <UpgradeVersion Property="NEWERPRODUCTFOUND" Minimum="$(var.Version)" IncludeMinimum="no" OnlyDetect="yes" Language="!(loc.Language)" />
+    </Upgrade>
+    <!-- Media and Icon -->
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+	<Icon Id="GBproductIcon.ico" SourceFile="$(var.Source_Icon)\$(var.Product_Icon)" />
+    <!--Propertys -->
+    <Property Id="MinDotNetVersion">$(var.MinDotNetVersion)</Property>
+    <Property Id="ARPCONTACT" Value="$(var.Contact)" />
+    <Property Id="ARPURLINFOABOUT" Value="$(var.www)" />
+    <Property Id="ARPPRODUCTICON" Value="GBproductIcon.ico" />
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Property Id="NEWERPRODUCTFOUND" Secure="yes" />
+	  
+    <Condition Message="!(loc.VersionMsg)"><![CDATA[Installed OR NOT NEWERPRODUCTFOUND]]></Condition>
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallFinalize" />
+    </InstallExecuteSequence>
+
+    <Feature Id="DefaultFeature" Title="GEOBOX Displaymodel Editor" Level="1">
+	  <!-- DisplayModelEditor -->
+	  <ComponentGroupRef Id="CG_DME_Assembly" />
+    </Feature>
+	  
+  <UI Id="WixUI_Minimal">
+	<TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+	<TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+	<TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+	<Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+	<Property Id="WixUI_Mode" Value="Minimal" />
+
+	<DialogRef Id="ErrorDlg" />
+	<DialogRef Id="FatalError" />
+	<DialogRef Id="FilesInUse" />
+	<DialogRef Id="MsiRMFilesInUse" />
+	<DialogRef Id="PrepareDlg" />
+	<DialogRef Id="ProgressDlg" />
+	<DialogRef Id="ResumeDlg" />
+	<DialogRef Id="UserExit" />
+
+	<DialogRef Id="WelcomeDlg" />
+
+	<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="PrepareDlg">1</Publish>
+	<Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+	<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+	<Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+	<Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+	<Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+	<Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+
+	<Property Id="ARPNOMODIFY" Value="1" />
+  </UI>
+
+  <WixVariable Id="WixUIDialogBmp" Value="$(var.Source_Image)" />
+  <WixVariable Id="WixUIBannerBmp" Value="$(var.Source_Banner)" />
+  <UIRef Id="WixUI_Common" />
+
+  </Product>
+</Wix>

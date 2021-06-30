@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?include config.wxi ?>
+<!-- Sprach-Datei für DEU installer. -->
+<WixLocalization Culture="de-DE" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+	<String Id="Language">1031</String>
+  <String Id="ProductName">GEOBOX Darstellungsmodell Editor</String>
+  <String Id="VersionMsg">Eine neuere Version von [ProductName] ist bereits installiert. Beende Installation</String>
+  <String Id="DotNetMsg">Diese Anwendung benötigt das .NET Framework [MinDotNetVersion].</String>
+</WixLocalization>

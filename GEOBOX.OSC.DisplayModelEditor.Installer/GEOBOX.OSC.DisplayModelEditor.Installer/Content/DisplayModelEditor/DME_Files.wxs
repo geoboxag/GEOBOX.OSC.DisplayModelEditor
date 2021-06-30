@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?include ..\..\config.wxi ?>
+<?include DME_config.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="DIR_DisplayModelEditor">
+      <!-- Products Assemblys -->
+      <Component Id="CMP_DME_DisplayModelEditor_exe" Guid="6985EBF7-82B2-4E02-A19B-BFC01DEA1037" Win64="yes">
+        <File Id="FILE_DME_DisplayModelEditor_exe" Name="$(var.DME_DisplayModelEditor_exe)" Source="$(var.Source_Assembly)\$(var.DME_DisplayModelEditor_exe)" KeyPath="yes" />
+        <Shortcut Id="FILE_DME_DisplayModelEditor_exe_Shortcut" Directory="PMF_ProductName" Name="!(loc.DME_ProgramMenuEntryName)" WorkingDirectory="DIR_DisplayModelEditor" Icon="GBproductIcon.ico" Advertise="yes" />
+      </Component>
+      <Component Id="CMP_DME_DisplayModelEditor_exe_config" Guid="8984CB0F-1B9A-4247-AA6D-71E7709C9769" Win64="yes">
+        <File Id="FILE_DME_DisplayModelEditor_exe_config" Name="$(var.DME_DisplayModelEditor_exe_config)" Source="$(var.Source_Assembly)\$(var.DME_DisplayModelEditor_exe_config)" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <!-- ************************************************************************************************************************************* -->
+    <!-- Component Groups -->
+    <ComponentGroup Id="CG_DME_Assembly">
+      <!-- Products Assemblys -->
+      <ComponentRef Id="CMP_DME_DisplayModelEditor_exe" />
+      <ComponentRef Id="CMP_DME_DisplayModelEditor_exe_config" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>

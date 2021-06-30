@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?include config.wxi ?>
+<!-- Sprach-Datei für ENU installer. -->
+<WixLocalization Culture="en-US" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+	<String Id="Language">1033</String>
+  <String Id="ProductName">GEOBOX Display Model Editor</String>
+  <String Id="VersionMsg">A newer version of [ProductName] is allready installed. Exiting installation</String>
+  <String Id="DotNetMsg">This application requires .NET Framework [MinDotNetVersion].</String>
+</WixLocalization>

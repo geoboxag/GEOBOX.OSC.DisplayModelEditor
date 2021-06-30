@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!-- Source-Folders in root config.wix -->
+  <?define DME_DisplayModelEditor_exe = "GEOBOX.OSC.DisplayModelEditor.exe"?>
+  <?define DME_DisplayModelEditor_exe_config = "GEOBOX.OSC.DisplayModelEditor.exe.config"?>
+  
+</Include>

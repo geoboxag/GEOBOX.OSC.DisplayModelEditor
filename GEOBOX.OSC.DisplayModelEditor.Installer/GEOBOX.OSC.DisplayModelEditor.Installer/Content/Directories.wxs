@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?include ../config.wxi?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--SetDirectory to File-System, [] = Property >> RegSearch... -->
+    <SetDirectory Id="DIR_PROGFILES" Value="[ProgramFiles64Folder]" />
+    <SetDirectory Id="DIR_PROGMENUFOLDER" Value="[ProgramMenuFolder]" />
+
+    <!--Set Directory structure-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Program Files Folder -->
+      <Directory Id="DIR_PROGFILES">
+        <!-- GEOBOX AG Directroy -->
+        <Directory Id="GEOBOXAG" Name="GEOBOX AG">
+          <!-- Programm Folders in Content\.. -->
+        </Directory>
+      </Directory>
+      
+      <!-- Program Menu Folder -->
+      <Directory Id="DIR_PROGMENUFOLDER">
+        <Directory Id="PMF_GEOBOX" Name="GEOBOX AG"></Directory>
+        <Directory Id="PMF_ProductName" Name="!(loc.ProductName)"></Directory>
+      </Directory>
+      
+      <!-- FontsFolder is a standard property-->
+      <Directory Id="FontsFolder" />
+      <!-- DesktopFolder is a standard property-->
+      <Directory Id="DesktopFolder" />
+    </Directory>
+  </Fragment>
+</Wix>

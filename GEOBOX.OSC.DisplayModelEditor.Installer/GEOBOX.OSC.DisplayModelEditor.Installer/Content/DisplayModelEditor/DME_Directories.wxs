@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?include ../../config.wxi?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--Set Directory structure-->
+    <DirectoryRef Id="GEOBOXAG">
+      <!-- GEOBOX AG\ProductFolderName -->
+      <Directory Id="DIR_DisplayModelEditor" Name="!(loc.DME_FolderName)">
+        <?if $(var.Lang)=de ?>
+        <Directory Id="DIR_DisplayModelEditor_ResourceDEU" Name="de" />
+        <?elseif $(var.Lang)=fr ?>
+        <Directory Id="DIR_DisplayModelEditor_ResourceFRA" Name="fr" />
+        <?elseif $(var.Lang)=it ?>
+        <Directory Id="DIR_DisplayModelEditor_ResourceITA" Name="it" />
+        <?endif?>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

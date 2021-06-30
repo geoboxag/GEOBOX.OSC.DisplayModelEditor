@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!--Header-Infos for Installer: do not Change this section -->
+  <?define Manufactor = "GEOBOX AG" ?>
+  <?define Contact = "GEOBOX AG - Engineering"?>
+  <?define www = "www.geobox.ch"?>
+  <?define DescriptionInstaller = "Installer" ?>
+  <?define CommentsInstaller = "(c) by GEOBOX AG - Engineering" ?>
+  <!--Image for Installer UI -->
+  <?define Source_Image="..\..\_images\Background.jpg"?>
+  <?define Source_Banner="..\..\_images\Banner.jpg"?>
+  <!--Angaben zum Installer -->
+  <?define Version="!(bind.FileVersion.FILE_DME_DisplayModelEditor_exe)"?>
+  <?define year="2022"?>
+  <?define MinDotNetVersion="4.8"?>
+  <?define ProductGUID="F3753362-97B3-4458-BE04-9F334A07AF7A"?>
+  <?define UpgradeGUID="615F5072-9528-45AC-8D30-CA99AE9BBB61"?>
+  <!--Icon-->
+  <?define Product_Icon="geobox.ico"?>
+  <?define Source_Icon="..\..\GEOBOX.OSC.DisplayModelEditor"?>
+  <!-- Source - OUTPUT Folder -->
+  <?define Source_Assembly="..\..\_output"?>
+</Include>
