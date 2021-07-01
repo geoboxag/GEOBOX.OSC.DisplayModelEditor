@@ -1,6 +1,7 @@
 ﻿using GEOBOX.OSC.DisplayModelEditor.DAL;
 using GEOBOX.OSC.DisplayModelEditor.FileHandler;
 using GEOBOX.OSC.DisplayModelEditor.Settings;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -218,8 +219,16 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
 
         public void ReadTbdmFile()
         {
-            tbdmFileHandler = new TbdmFileHandler(BasePath, TbdmFilePath);
-            tbdmFileHandler.Read();
+            try
+            {
+                tbdmFileHandler = new TbdmFileHandler(BasePath, TbdmFilePath);
+                tbdmFileHandler.Read();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Meldung beim lesen der TBDM-Datei:{Environment.NewLine}{ex.Message}", "Hopperla...", MessageBoxButtons.OK);
+                return;
+            }
 
             InsertTasks(tbdmFileHandler.GetTbdmmapController());
 

@@ -1,9 +1,11 @@
 ﻿using GEOBOX.OSC.DisplayModelEditor.DAL;
 using GEOBOX.OSC.DisplayModelEditor.FileHandler;
 using GEOBOX.OSC.DisplayModelEditor.IO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
 {
@@ -25,9 +27,17 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         internal void Merge()
         {
             var controller1 = new TbdmFileHandler(basePath, path1);
-            controller1.Read();
             var controller2 = new TbdmFileHandler(basePath, path2);
-            controller2.Read();
+            try
+            {
+                controller1.Read();
+                controller2.Read();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Meldung beim lesen einer der TBDM-Dateien:{Environment.NewLine}{ex.Message}", "Hopperla...", MessageBoxButtons.OK);
+                return;
+            }
 
             var groups = MergeGroups(controller1, controller2);
             var layers = MergeLayers(controller1, controller2);

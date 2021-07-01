@@ -23,15 +23,15 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DefineConstants>Debug</DefineConstants>
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>C:\_repos_GIT\GEOBOX.OSC.DisplayModelEditor\_output\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <OutputPath>..\_data_Release\$(Platform)\</OutputPath>
+    <OutputPath>C:\_repos_GIT\GEOBOX.OSC.DisplayModelEditor\_output\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Lang=fr;</DefineConstants>
+    <DefineConstants>Lang=de;</DefineConstants>
     <WixVariables>Platform=x64</WixVariables>
-    <Cultures>fr-FR</Cultures>
+    <Cultures>de-DE</Cultures>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'de_DE|x86' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
@@ -41,7 +41,7 @@
     <Cultures>de-DE</Cultures>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'de_DE|x64' ">
-    <OutputPath>..\_data_Release\$(Platform)\</OutputPath>
+    <OutputPath>C:\_repos_GIT\GEOBOX.OSC.DisplayModelEditor\_output\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Lang=de;</DefineConstants>
     <WixVariables>Platform=x64</WixVariables>
@@ -63,7 +63,7 @@
     <DefineConstants>Lang=de;</DefineConstants>
     <WixVariables>Platform=x64</WixVariables>
     <Cultures>de-DE</Cultures>
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>C:\_repos_GIT\GEOBOX.OSC.DisplayModelEditor\_output\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'fr_Fr|AnyCPU' ">
@@ -113,11 +113,4 @@
 	<Target Name="AfterBuild">
 	</Target>
 	-->
-  <Target Name="AfterBuild">
-      <GetAssemblyIdentity AssemblyFiles="..\..\_output\GEOBOX.OSC.DisplayModelEditor.exe">
-      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
-    </GetAssemblyIdentity>
-    <Copy SourceFiles="$(TargetDir)\$(Cultures)\$(OutputName).msi" DestinationFiles="$(TargetDir)\$(Cultures)\$(OutputName)_%(AssemblyVersion.Version).msi" />
-    <Delete Files="$(TargetDir)\$(Cultures)\$(OutputName).msi" />
-  </Target>
 </Project>

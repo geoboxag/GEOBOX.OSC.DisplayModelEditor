@@ -13,8 +13,8 @@
   <?define Version="!(bind.FileVersion.FILE_DME_DisplayModelEditor_exe)"?>
   <?define year="2022"?>
   <?define MinDotNetVersion="4.8"?>
-  <?define ProductGUID="F3753362-97B3-4458-BE04-9F334A07AF7A"?>
-  <?define UpgradeGUID="615F5072-9528-45AC-8D30-CA99AE9BBB61"?>
+  <?define ProductGUID="3D97E22C-3AB8-43A7-A6E5-CB117CB80C40"?>
+  <?define UpgradeGUID="CE740517-C736-45E5-8813-847F986208E0"?>
   <!--Icon-->
   <?define Product_Icon="geobox.ico"?>
   <?define Source_Icon="..\..\GEOBOX.OSC.DisplayModelEditor"?>
