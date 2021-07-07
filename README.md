@@ -30,6 +30,14 @@ Hinweis: Es wird Empfohlen auf einer Kopie der Darstellungsmodelle zu arbeiten o
 ### Übersicht 1-Klick-Wartung
 ![](_images/oneClickMaintenanceOverview.png)
 
+#### Root-Pfad Darstellungsmodell
+Der "Root-Pfad" kann in der Config-Datei (GEOBOX.OSC.DisplayModelEditor.exe.config) eingestellt werden, damit beim Start der Software dieser auf den gewünschten Pfad lautet.
+
+#### Bereinigen
+Die Resultate können mit der Schaltfläche "Bereinigen" behoben werden.
+Für gewisse Bereinigungen werden Werte aus der Config-Datei  (GEOBOX.OSC.DisplayModelEditor.exe.config) verwendet.
+Beispielsweise die Angaben der "Datensource" in den Layer-Dateien.
+
 ### Übersicht Darstellungsmodelle zusammenführen
 ![](_images/mergeDisplayModelOverview.png)
 

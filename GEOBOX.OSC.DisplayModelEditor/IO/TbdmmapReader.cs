@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Media.Animation;
 using System.Xml;
 
 namespace GEOBOX.OSC.DisplayModelEditor.IO
@@ -22,8 +23,8 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                 MessageBox.Show("tbdmmap-Datei konnte nicht gelesen werden.");
                 return null;
             }
-            item.Units = xmlReadDoc.GetElementsByTagName("Units").Item(0).InnerText;
-            item.CoordSystem = xmlReadDoc.GetElementsByTagName("CoordinateSystem").Item(0).InnerText;
+            item.Units = GetFirstElementByTagNameOrDefault(xmlReadDoc, "Units");
+            item.CoordSystem = GetFirstElementByTagNameOrDefault(xmlReadDoc, "CoordinateSystem");
             item.AddGroups(ReadGroups(xmlReadDoc.GetElementsByTagName("MapLayerGroup")));
             item.AddMapLayers(ReadMapLayers(filePath, xmlReadDoc.GetElementsByTagName("DisplayModelMapLayer"), item));
 
@@ -252,6 +253,25 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
         private void SaveTbdmapFile(string filePath, XmlDocument xDoc)
         {
             xDoc.Save(filePath);
+        }
+
+        /// <summary>
+        /// Return Inner Text or String.Empty
+        /// </summary>
+        /// <returns></returns>
+        private string GetFirstElementByTagNameOrDefault(XmlDocument xmlReadDoc, string tagName)
+        {
+            var items = xmlReadDoc.GetElementsByTagName(tagName);
+
+            if (items.Count == 0) return string.Empty;
+
+            var firstItem = items.Item(0);
+
+            if (firstItem is null) return string.Empty;
+
+            if (String.IsNullOrEmpty(firstItem.InnerText)) return string.Empty;
+
+            return firstItem.InnerText;
         }
     }
 }

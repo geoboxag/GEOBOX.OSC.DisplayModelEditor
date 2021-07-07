@@ -31,7 +31,7 @@
                 <TextBox x:Name="RootLayerPath" 
                          TextWrapping="Wrap" 
                          Text="" 
-                         VerticalContentAlignment="Center"/>
+                         VerticalContentAlignment="Center" IsEnabled="False"/>
 
                 <Button x:Name="SelectRepositoryPathButton" ToolTip="Durchsuchen" 
                         Click="SelectRepoPathButton_Click" Grid.Column="2">
@@ -84,7 +84,7 @@
 
                 <TextBox x:Name="TbdmFilePath" 
                          TextWrapping="Wrap" 
-                         VerticalContentAlignment="Center" Margin="0,0,4,0" Grid.ColumnSpan="2"/>
+                         VerticalContentAlignment="Center" Margin="0,0,4,0" Grid.ColumnSpan="2" IsEnabled="False"/>
             </Grid>
         </GroupBox>
 
