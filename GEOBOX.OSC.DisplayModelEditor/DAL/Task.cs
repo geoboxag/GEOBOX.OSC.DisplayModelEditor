@@ -18,11 +18,11 @@ namespace GEOBOX.OSC.DisplayModelEditor.DAL
             set
             {
                 isActive = value;
-                OnPropertyChanged("IsActive");
+                OnPropertyChanged(nameof(IsActive));
             }
         }
         public bool isEnabled = true;
-        public bool FixIsAvailable
+        public bool IsEnabled
         {
             get
             {
@@ -31,7 +31,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.DAL
             set
             {
                 isEnabled = value;
-                OnPropertyChanged("IsEnabled");
+                OnPropertyChanged(nameof(IsEnabled));
             }
         }
 
@@ -45,7 +45,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.DAL
             set
             {
                 imageIndex = value;
-                OnPropertyChanged("ImageIndex");
+                OnPropertyChanged(nameof(ImageIndex));
             }
         }
 
@@ -59,7 +59,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.DAL
             set
             {
                 isFixed = value;
-                OnPropertyChanged("IsFixed");
+                OnPropertyChanged(nameof(IsFixed));
             }
         }
 

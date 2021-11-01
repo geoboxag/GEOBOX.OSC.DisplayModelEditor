@@ -47,9 +47,11 @@
                                Width="22" />
                     </StackPanel>
                 </Button>
-                <TextBox x:Name="TbdmFilePathOne"
-                         TextWrapping="Wrap" 
-                         VerticalContentAlignment="Center" 
+                <TextBlock x:Name="TbdmFilePathOne"
+                         TextWrapping="Wrap"
+                         VerticalAlignment="Center"
+                         Text=""
+                         IsManipulationEnabled="false" 
                          Grid.Column="1" />
 
                 <Button ToolTip="Durchsuchen" 
@@ -62,9 +64,11 @@
                                Width="22"/>
                     </StackPanel>
                 </Button>
-                <TextBox x:Name="TbdmFilePathTwo" 
-                         TextWrapping="Wrap" 
-                         VerticalContentAlignment="Center" 
+                <TextBlock x:Name="TbdmFilePathTwo" 
+                         TextWrapping="Wrap"
+                         VerticalAlignment="Center"
+                         Text=""
+                         IsManipulationEnabled="false" 
                          Grid.Row="2" 
                          Grid.Column="1"/>
                 <Button ToolTip="Auswahl Darstellungsmodelle leeren"
@@ -77,9 +81,11 @@
                 <Label Content="Speicherort auswählen" 
                        Grid.Row="4" 
                        Grid.Column="1" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="SaveMergedFilePath" 
-                         TextWrapping="Wrap" 
-                         VerticalContentAlignment="Center" 
+                <TextBlock x:Name="SaveMergedFilePath" 
+                         TextWrapping="Wrap"
+                         VerticalAlignment="Center"
+                         Text=""
+                         IsManipulationEnabled="false"
                          Grid.Row="6" 
                          Grid.Column="1"/>
                 <Button ToolTip="Durchsuchen" 

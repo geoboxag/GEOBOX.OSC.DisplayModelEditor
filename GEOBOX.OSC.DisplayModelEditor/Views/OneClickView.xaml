@@ -28,10 +28,12 @@
                     <RowDefinition Height="26"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="RootLayerPath" 
-                         TextWrapping="Wrap" 
-                         Text="" 
-                         VerticalContentAlignment="Center" IsEnabled="False"/>
+                <TextBlock x:Name="RootLayerPath" 
+                           TextWrapping="Wrap"
+                           VerticalAlignment="Center"
+                           Text=""
+                           IsManipulationEnabled="false">
+                </TextBlock>
 
                 <Button x:Name="SelectRepositoryPathButton" ToolTip="Durchsuchen" 
                         Click="SelectRepoPathButton_Click" Grid.Column="2">
@@ -82,26 +84,30 @@
                     </StackPanel>
                 </Button>
 
-                <TextBox x:Name="TbdmFilePath" 
-                         TextWrapping="Wrap" 
-                         VerticalContentAlignment="Center" Margin="0,0,4,0" Grid.ColumnSpan="2" IsEnabled="False"/>
+                <TextBlock x:Name="TbdmFilePath" 
+                         TextWrapping="Wrap"
+                         VerticalAlignment="Center"
+                         Text=""
+                         IsManipulationEnabled="false"
+                         Margin="0,0,4,0" 
+                         Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
 
         <GroupBox Header="Darstellungsmodell Informationen" Grid.Row="2" Padding="3">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="166*"/>
+                    <ColumnDefinition Width="100*"/>
                     <ColumnDefinition Width="4"/>
                     <ColumnDefinition Width="186*"/>
                     <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="166*"/>
+                    <ColumnDefinition Width="100*"/>
                     <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="147*"/>
+                    <ColumnDefinition Width="186*"/>
                     <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="144*"/>
+                    <ColumnDefinition Width="100*"/>
                     <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="119*"/>
+                    <ColumnDefinition Width="120*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="26"/>
@@ -169,7 +175,7 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <CheckBox IsChecked="{Binding IsActive}"
-                                                              IsEnabled="{Binding FixIsAvailable}"
+                                                              IsEnabled="{Binding IsEnabled}"
                                                               Width="16" 
                                                               Height="16" />
                                                 </DataTemplate>

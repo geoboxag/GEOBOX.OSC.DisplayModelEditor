@@ -31,7 +31,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             private set
             {
                 oneClickTasks = value;
-                OnPropertyChanged("OneClickTasks");
+                OnPropertyChanged(nameof(OneClickTasks));
             }
         }
 
@@ -45,7 +45,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             private set
             {
                 comparedFiles = value;
-                OnPropertyChanged("ComparedFiles");
+                OnPropertyChanged(nameof(ComparedFiles));
             }
         }
 
@@ -59,7 +59,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 basePath = value;
-                OnPropertyChanged("BasePath");
+                OnPropertyChanged(nameof(BasePath));
             }
         }
 
@@ -73,7 +73,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 tbdmFileName = value;
-                OnPropertyChanged("TbdmFileName");
+                OnPropertyChanged(nameof(TbdmFileName));
             }
         }
 
@@ -87,7 +87,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 tbdmFilePath = value;
-                OnPropertyChanged("TbdmFilePath");
+                OnPropertyChanged(nameof(TbdmFilePath));
             }
         }
 
@@ -101,7 +101,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 tbdmmapFileName = value;
-                OnPropertyChanged("TbdmmapFileName");
+                OnPropertyChanged(nameof(TbdmmapFileName));
             }
         }
 
@@ -115,7 +115,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 countGroup = value;
-                OnPropertyChanged("CountGroup");
+                OnPropertyChanged(nameof(CountGroup));
             }
         }
 
@@ -129,7 +129,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 countLayer = value;
-                OnPropertyChanged("CountLayer");
+                OnPropertyChanged(nameof(CountLayer));
             }
         }
 
@@ -143,7 +143,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 coordSys = value;
-                OnPropertyChanged("CoordSys");
+                OnPropertyChanged(nameof(CoordSys));
             }
         }
 
@@ -157,7 +157,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 unitsValue = value;
-                OnPropertyChanged("UnitsValue");
+                OnPropertyChanged(nameof(UnitsValue));
             }
         }
 
@@ -171,7 +171,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 compareCount = value;
-                OnPropertyChanged("CompareCount");
+                OnPropertyChanged(nameof(CompareCount));
             }
         }
 
@@ -185,7 +185,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 checkOnlyTbdmmap = value;
-                OnPropertyChanged("CheckOnlyTbdmmap");
+                OnPropertyChanged(nameof(CheckOnlyTbdmmap));
             }
         }
 
@@ -199,7 +199,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 oneClickRunButton = value;
-                OnPropertyChanged("OneClickRunButton");
+                OnPropertyChanged(nameof(OneClickRunButton));
             }
         }
 
@@ -213,7 +213,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 removeMissingLayersButton = value;
-                OnPropertyChanged("RemoveMissingLayersButton");
+                OnPropertyChanged(nameof(RemoveMissingLayersButton));
             }
         }
 
@@ -309,7 +309,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             SortDescription sortDescription = new SortDescription(sortColumnName, sortDirection);
             MaintenanceTasksView.SortDescriptions.Add(sortDescription);
             MaintenanceTasksView.Refresh();
-            OnPropertyChanged("MaintenanceTasksView");
+            OnPropertyChanged(nameof(MaintenanceTasksView));
         }
 
         private void SetButtonState()

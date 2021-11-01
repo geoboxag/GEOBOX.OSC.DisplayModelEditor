@@ -1,4 +1,5 @@
-﻿using GEOBOX.OSC.DisplayModelEditor.DAL;
+﻿using System;
+using GEOBOX.OSC.DisplayModelEditor.DAL;
 using GEOBOX.OSC.DisplayModelEditor.FileHandler;
 using System.IO;
 using System.Windows.Forms;
@@ -89,10 +90,33 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
         {
             var setting = new XmlWriterSettings();
             setting.Indent = true;
-            using (var xmlWriter = XmlWriter.Create(file, setting))
+
+            XmlWriter xmlWriter = null;
+
+            try
             {
+                xmlWriter = XmlWriter.Create(file, setting);
                 doc.Save(xmlWriter);
-                xmlWriter.Flush();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show(
+                    "Die Datei ist mit einem Schreibschutz versehen." + Environment.NewLine +
+                    "Entfernen Sie den Schreibschutz und wiederholen sie den Vorgang." + Environment.NewLine +
+                    Environment.NewLine + "Datei:" + Environment.NewLine +
+                    $"{file}",
+                    "Speichern fehlgeschlagen",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            catch (Exception) { /* Do nothing */ }
+            finally
+            {
+                if (xmlWriter != null)
+                {
+                    xmlWriter.Flush();
+                    xmlWriter.Close();
+                }
             }
         }
 

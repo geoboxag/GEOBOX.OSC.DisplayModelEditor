@@ -61,7 +61,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             set
             {
                 messageLogger = value;
-                OnPropertyChanged("MessageLogger");
+                OnPropertyChanged(nameof(MessageLogger));
             }
         }
 

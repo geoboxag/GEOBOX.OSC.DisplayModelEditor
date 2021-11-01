@@ -27,7 +27,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
             }
             catch
             {
-                list.Add(new Task(string.Empty, Resources.LayersNotFound, TaskType.LayerNotFound, TaskImage.ToDo) { FixIsAvailable = false });
+                list.Add(new Task(string.Empty, Resources.LayersNotFound, TaskType.LayerNotFound, TaskImage.ToDo) { IsEnabled = false });
                 MissingLayerHandler.AddMissingLayer(new MissingLayer(filePath, MissingLayer.Tag.File));
             }
 
