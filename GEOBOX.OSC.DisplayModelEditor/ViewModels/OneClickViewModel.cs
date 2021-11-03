@@ -21,6 +21,20 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         private ListSortDirection sortDirection;
         public ICollectionView MaintenanceTasksView { get; private set; }
 
+        private ObservableCollection<Check> executedChecks = new ObservableCollection<Check>();
+        public ObservableCollection<Check> ExecutedChecks
+        {
+            get
+            {
+                return executedChecks;
+            }
+            private set
+            {
+                executedChecks = value;
+                OnPropertyChanged(nameof(ExecutedChecks));
+            }
+        }
+
         private ObservableCollection<Task> oneClickTasks;
         public ObservableCollection<Task> OneClickTasks
         {
@@ -219,10 +233,11 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
 
         public void ReadTbdmFile()
         {
+            ExecutedChecks.Clear();
             try
             {
                 tbdmFileHandler = new TbdmFileHandler(BasePath, TbdmFilePath);
-                tbdmFileHandler.Read();
+                tbdmFileHandler.Read(ExecutedChecks);
             }
             catch (Exception ex)
             {
@@ -236,7 +251,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             TbdmmapFileName = tbdmFileHandler.GetTbdmmapItem().GetName();
             UnitsValue = tbdmFileHandler.GetTbdmmapController().GetItems().Select(item => item.Units).FirstOrDefault();
             CoordSys = tbdmFileHandler.GetTbdmmapController().GetItems().Select(item => item.CoordSystem).FirstOrDefault();
-            CountGroup = tbdmFileHandler.GetTbdmmapController().GetItems().SelectMany(item => item.GetGroups()).Count(item => item.Group != null).ToString();
+            CountGroup = tbdmFileHandler.GetTbdmmapController().GetItems().SelectMany(item => item.GetGroups()).Count().ToString();
             CountLayer = tbdmFileHandler.GetTbdmmapController().GetItems().SelectMany(item => item.GetMapLayers()).Count().ToString();
 
             if (!CheckOnlyTbdmmap)
@@ -315,17 +330,17 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         private void SetButtonState()
         {
             OneClickRunButton = new Button();
-            removeMissingLayersButton = new Button();
+            RemoveMissingLayersButton = new Button();
 
             if (MissingLayerHandler.GetCount() > 0 && !CheckOnlyTbdmmap)
             {
                 OneClickRunButton.Enabled = false;
-                removeMissingLayersButton.Enabled = true;
+                RemoveMissingLayersButton.Enabled = true;
             }
             else
             {
                 OneClickRunButton.Enabled = true;
-                removeMissingLayersButton.Enabled = false;
+                RemoveMissingLayersButton.Enabled = false;
             }
         }
 
@@ -356,6 +371,17 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         public TbdmmapFileHandler GetTbdmmapController()
         {
             return tbdmFileHandler.GetTbdmmapController();
+        }
+
+        internal void UpdateCheckCollection(string taskKey)
+        {
+            foreach (Check check in ExecutedChecks)
+            {
+                if (check.TaskKeys.Contains(taskKey))
+                {
+                    check.RemoveTaskKey(taskKey);
+                }
+            }
         }
 
         public void DeleteSelectedLayers()

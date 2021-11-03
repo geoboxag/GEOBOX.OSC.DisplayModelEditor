@@ -72,6 +72,7 @@
     <Compile Include="CorrectionTasks\ICorrectionTaskContext.cs" />
     <Compile Include="CorrectionTasks\ICorrectionTaskResult.cs" />
     <Compile Include="CorrectionTasks\ResetDataSourceCorrectionTask.cs" />
+    <Compile Include="DAL\Check.cs" />
     <Compile Include="Enums\TaskImage.cs" />
     <Compile Include="Enums\TaskType.cs" />
     <Compile Include="IO\LayerReader.cs" />

@@ -27,28 +27,28 @@ namespace GEOBOX.OSC.DisplayModelEditor.FileHandler
             return list;
         }
 
-        internal void Load(string path)
+        internal void Load(string path, ICollection<Check> executedChecks)
         {
-            LoadTbdmmap(path);
-            LoadLayers();
+            LoadTbdmmap(path, executedChecks);
+            LoadLayers(executedChecks);
         }
 
-        private void LoadTbdmmap(string path)
+        private void LoadTbdmmap(string path, ICollection<Check> executedChecks)
         {
             list.Clear();
             string filePath = Path.Combine(basePath, path);
             var reader = new TbdmmapReader();
-            var maplayer = reader.ReadTbdmmap(filePath);
+            var maplayer = reader.ReadTbdmmap(filePath, executedChecks);
             if (maplayer != null)
             {
                 list.Add(maplayer);
             }
         }
 
-        private void LoadLayers()
+        private void LoadLayers(ICollection<Check> executedChecks)
         {
             controller = new LayerHandler();
-            controller.ReadLayers(GetAllLayerFilePaths());
+            controller.ReadLayers(GetAllLayerFilePaths(), executedChecks);
         }
 
         private string GetPath(string path)
@@ -75,35 +75,47 @@ namespace GEOBOX.OSC.DisplayModelEditor.FileHandler
 
         internal void Run1ClickTask(string taskName, string filename)
         {
-            var task = GetAllTasks().ToList().Find(item => item.FileName.Equals(filename) && item.Tag.ToString().Equals(taskName));
+            var tasks = GetAllTasks().ToList().FindAll(item => item.FileName.Equals(filename) && item.Tag.ToString().Equals(taskName));
 
-            if (task == null)
+            if (tasks == null || !tasks.Any())
             {
                 return;
             }
 
             var tbdmmapReader = new TbdmmapReader();
             var layerReader = new LayerReader();
-            switch (taskName)
+
+            foreach(var task in tasks)
             {
-                case "SetDatasource":
-                    tbdmmapReader.ResetDataSource(task, filename);
-                    break;
-                case "SetWindowState":
-                    tbdmmapReader.SetWindowState(task, filename);
-                    break;
-                case "RemoveViewPort":
-                    tbdmmapReader.DeleteViewPort(task, filename);
-                    break;
-                case "RemoveExtendedData":
-                    layerReader.DeleteExtendedData(task, filename);
-                    break;
-                case "RemoveFilter":
-                    layerReader.DeleteFilterNodes(task, filename);
-                    break;
-                case "SetAttributes":
-                    layerReader.ChangeLayerAttributes(task, filename);
-                    break;
+                if(!task.IsActive)
+                {
+                    continue;
+                }
+
+                switch (taskName)
+                {
+                    case "SetDatasource":
+                        tbdmmapReader.ResetDataSource(task, filename);
+                        break;
+                    case "SetWindowState":
+                        tbdmmapReader.SetWindowState(task, filename);
+                        break;
+                    case "RemoveViewPort":
+                        tbdmmapReader.DeleteViewPort(task, filename);
+                        break;
+                    case "RemoveUnusedGroup":
+                        tbdmmapReader.DeleteMapLayerGroup(task, filename);
+                        break;
+                    case "RemoveExtendedData":
+                        layerReader.DeleteExtendedData(task, filename);
+                        break;
+                    case "RemoveFilter":
+                        layerReader.DeleteFilterNodes(task, filename);
+                        break;
+                    case "SetAttributes":
+                        layerReader.ChangeLayerAttributes(task, filename);
+                        break;
+                }
             }
         }
 

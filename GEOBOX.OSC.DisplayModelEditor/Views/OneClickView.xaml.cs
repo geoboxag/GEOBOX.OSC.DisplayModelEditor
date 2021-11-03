@@ -2,7 +2,8 @@
 using GEOBOX.OSC.DisplayModelEditor.ViewModels;
 using Microsoft.Win32;
 using System;
-using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -30,9 +31,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.Views
         private void DisplayModelBrowseButton_Click(object sender, RoutedEventArgs e)
         {
             TbdmFilePath.Text = "";
+            string filter = "DisplayModel|*.tbdm";
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "DisplayModel|*.tbdm";
+            openFileDialog.Filter = filter;
             openFileDialog.InitialDirectory = !string.IsNullOrEmpty(RootLayerPath.Text) ? RootLayerPath.Text : "C:";
 
             if (openFileDialog.ShowDialog() == true)
@@ -67,19 +69,24 @@ namespace GEOBOX.OSC.DisplayModelEditor.Views
 
         private void OneClickRunButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Task task in OneClickListView.Items)
+            foreach (Task task in oneClickMaintenanceInfoViewModel.OneClickTasks)
             {
                 if (task.IsActive)
                 {
                     oneClickMaintenanceInfoViewModel.GetTbdmmapController().Run1ClickTask(task.Tag.ToString(), task.FileName);
-                    task.IsFixed = true;
+
+                    if(task.IsFixed)
+                    {
+                        oneClickMaintenanceInfoViewModel.UpdateCheckCollection(task.TaskKey);
+                    }                
                 }
-            }
+            }           
         }
 
         private void CleanComparedFilesButton_Click(object sender, RoutedEventArgs e)
         {
             oneClickMaintenanceInfoViewModel.DeleteSelectedLayers();
+            ReadDataAndShowInfos();
         }
 
         private void Image_IconImageFailed(object sender, ExceptionRoutedEventArgs e)

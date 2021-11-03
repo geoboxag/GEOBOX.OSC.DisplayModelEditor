@@ -11,7 +11,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.FileHandler
         private List<Task> tasks = new List<Task>();
         private LayerReader reader = new LayerReader();
 
-        internal void ReadLayers(IEnumerable<string> layers)
+        internal void ReadLayers(IEnumerable<string> layers, ICollection<Check> executedChecks)
         {
             MissingLayerHandler.ClearList();
 
@@ -28,14 +28,25 @@ namespace GEOBOX.OSC.DisplayModelEditor.FileHandler
 
             //Read layers from folder
             string dirPath = Path.GetDirectoryName(layers.First());
+            List<string> layersInFolder = new List<string>();
             if (Directory.Exists(dirPath))
             {
-                List<string> layersInFolder = Directory.GetFiles(dirPath).ToList();
+                layersInFolder.AddRange(Directory.GetFiles(dirPath).ToList());
                 foreach (var missingLayer in layersInFolder.Except(layers))
                 {
                     MissingLayerHandler.AddMissingLayer(new MissingLayer(missingLayer, MissingLayer.Tag.Folder));
                 }
             }
+
+            if(MissingLayerHandler.GetMissingLayers().Count() > 0)
+            {
+                executedChecks?.Add(new Check() { Name = "Layer-Dateien", Count = layersInFolder.Count(), IsOk = false, CountFaults = MissingLayerHandler.GetMissingLayers().Count() });
+            }
+            else
+            {
+                executedChecks?.Add(new Check() { Name = "Layer-Dateien", Count = layersInFolder.Count(), IsOk = true, CountFaults = MissingLayerHandler.GetMissingLayers().Count() });
+            }
+
         }
 
         internal IEnumerable<Task> GetLayerTasks()

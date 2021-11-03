@@ -101,12 +101,12 @@
                 <SolidColorBrush Color="{DynamicResource gbxMainWindowStyleBorderColor}"/>
             </Border.BorderBrush>
             <StackPanel x:Name="NavigationStackPanel" Margin="9,0" Orientation="Horizontal">
-                <Label x:Name="NaviagtionOneClickMaintenanceLabel" VerticalContentAlignment="Center" Width="120" HorizontalAlignment="Left" Content="1-Klick Wartung" MouseLeftButtonDown="NavigationOneClickMaintenance_Click">
+                <Label x:Name="NaviagtionOneClickMaintenanceLabel" VerticalContentAlignment="Center" Width="120" HorizontalAlignment="Left" Content="Prüfen" MouseLeftButtonDown="NavigationOneClickMaintenance_Click">
                     <Label.BorderBrush>
                         <SolidColorBrush Color="{DynamicResource gbxMainWindowStyleBorderColor}"/>
                     </Label.BorderBrush>
                 </Label>
-                <Label x:Name="NavigationJoinDisplayModelInfoLabel" Content="Darstellungsmodelle zusammenführen" Width="226" VerticalContentAlignment="Center" HorizontalAlignment="Left" MouseLeftButtonDown="NavigationJoinDisplayModelInfo_Click">
+                <Label x:Name="NavigationJoinDisplayModelInfoLabel" Content="Zusammenführen" Width="226" VerticalContentAlignment="Center" HorizontalAlignment="Left" MouseLeftButtonDown="NavigationJoinDisplayModelInfo_Click">
                     <Label.BorderBrush>
                         <SolidColorBrush Color="{DynamicResource gbxMainWindowStyleBorderColor}"/>
                     </Label.BorderBrush>

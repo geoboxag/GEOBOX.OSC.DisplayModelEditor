@@ -37,6 +37,11 @@ namespace GEOBOX.OSC.DisplayModelEditor.FileHandler
             items.Remove(layer);
         }
 
+        internal void RemoveGroup(LayerGroup layerGroup)
+        {
+            groups.Remove(layerGroup);
+        }
+
         internal IEnumerable<LayerGroup> GetGroups()
         {
             return groups;

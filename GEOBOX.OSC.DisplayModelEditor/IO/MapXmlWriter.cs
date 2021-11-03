@@ -1,8 +1,8 @@
-﻿using System;
-using GEOBOX.OSC.DisplayModelEditor.DAL;
+﻿using GEOBOX.OSC.DisplayModelEditor.DAL;
 using GEOBOX.OSC.DisplayModelEditor.FileHandler;
+using System;
 using System.IO;
-using System.Windows.Forms;
+using System.Windows;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -105,9 +105,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                     "Entfernen Sie den Schreibschutz und wiederholen sie den Vorgang." + Environment.NewLine +
                     Environment.NewLine + "Datei:" + Environment.NewLine +
                     $"{file}",
-                    "Speichern fehlgeschlagen",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    "Speichern fehlgeschlagen", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception) { /* Do nothing */ }
             finally

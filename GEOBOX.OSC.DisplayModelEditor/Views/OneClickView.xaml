@@ -10,198 +10,296 @@
         <converters:BoolToImage x:Key="BoolToImage" />
     </UserControl.Resources>
     <Grid x:Name="ContentGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="85"/>
-            <RowDefinition Height="85"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <GroupBox x:Name="RepositoryPathGroupBox" Header="Root-Pfad Darstellungsmodell" Padding="3">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="30"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="26"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBlock x:Name="RootLayerPath" 
+        <Grid x:Name="DmInfoOverview" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="200*"/>
+            </Grid.RowDefinitions>
+
+            <GroupBox x:Name="RepositoryPathGroupBox" Header="Basis-Pfad für Repository" Padding="3">
+                <Grid Height="40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Todo: Binding Text-->
+                    <TextBlock x:Name="RootLayerPath" 
                            TextWrapping="Wrap"
                            VerticalAlignment="Center"
                            Text=""
                            IsManipulationEnabled="false">
-                </TextBlock>
+                    </TextBlock>
 
-                <Button x:Name="SelectRepositoryPathButton" ToolTip="Durchsuchen" 
-                        Click="SelectRepoPathButton_Click" Grid.Column="2">
-                    <StackPanel>
-                        <Image Source="/Includes/Open_light_024.png" 
-                               Height="22"/>
-                    </StackPanel>
-                </Button>
-            </Grid>
-        </GroupBox>
+                    <Button x:Name="SelectRepositoryPathButton" ToolTip="Durchsuchen" 
+                        Click="SelectRepoPathButton_Click" Grid.Column="1" Margin="5">
+                        <Image Source="/Includes/Open_light_024.png"/>
+                    </Button>
 
-        <GroupBox Header="Darstellungsmodell auswählen" Grid.Row="1" Padding="3">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="26"/>
-                    <RowDefinition Height="4"/>
-                    <RowDefinition Height="26"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="30"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="RefreshButton" 
-                        ToolTip="Aktualisieren"
-                        Click="RefreshFileResultButton_Click" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="125" Margin="0,0,135,0" HorizontalContentAlignment="Left">
-                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                        <Image Source="/Includes/Refresh_light_024.png" HorizontalAlignment="Left" />
-                        <Label Content="Aktualisieren" VerticalContentAlignment="Center" Padding="5,0"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="ExportCSVButton"
-                        ToolTip="Als CSV exportieren"
-                        Click="CreateCsvButton_Click" Grid.Row="2" HorizontalAlignment="Right" Width="125" HorizontalContentAlignment="Left">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Includes/FileExport_light_024.png" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                        <Label Content="Export CSV" VerticalContentAlignment="Center" Padding="5,0"/>
-                    </StackPanel>
-                </Button>
+                </Grid>
+            </GroupBox>
 
-                <Button ToolTip="Durchsuchen" 
-                        Click="DisplayModelBrowseButton_Click" Grid.Column="2">
-                    <StackPanel>
-                        <Image Source="/Includes/Open_light_024.png" 
-                               Width="22"
-                               Height="22" />
-                    </StackPanel>
-                </Button>
+            <GroupBox Header="Darstellungsmodell" Grid.Row="1" Padding="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="160"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
 
-                <TextBlock x:Name="TbdmFilePath" 
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <!--Todo: Binding Text-->
+                        <TextBlock x:Name="TbdmFilePath" 
                          TextWrapping="Wrap"
                          VerticalAlignment="Center"
                          Text=""
                          IsManipulationEnabled="false"
-                         Margin="0,0,4,0" 
-                         Grid.ColumnSpan="2"/>
-            </Grid>
-        </GroupBox>
+                         Margin="0,0,4,0" Grid.Column="0"/>
 
-        <GroupBox Header="Darstellungsmodell Informationen" Grid.Row="2" Padding="3">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100*"/>
-                    <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="186*"/>
-                    <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="100*"/>
-                    <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="186*"/>
-                    <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="100*"/>
-                    <ColumnDefinition Width="4"/>
-                    <ColumnDefinition Width="120*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="26"/>
-                    <RowDefinition Height="4"/>
-                    <RowDefinition Height="26"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Label Content="Name" VerticalContentAlignment="Center" Style="{DynamicResource gbxDetailsHintLabel}"/>
-                <Label Content="TBDMMAP-Datei" 
-                       RenderTransformOrigin="0.5,0.5" 
-                       Grid.Row="2" VerticalContentAlignment="Center" Style="{DynamicResource gbxDetailsHintLabel}" />
+                        <Button ToolTip="Durchsuchen" Margin="5"
+                        Click="DisplayModelBrowseButton_Click" Grid.Column="1">
+                            <Image Source="/Includes/Open_light_024.png" />
+                        </Button>
+                    </Grid>
 
-                <Label x:Name="TbdmFileName" 
-                       Content="{Binding TbdmFileName}" 
-                       Grid.Column="2" VerticalContentAlignment="Center"/>
-                <Label x:Name="TbdmmapFileName" 
-                       Content="{Binding TbdmmapFileName}" 
-                       Grid.Column="2" 
-                       Grid.Row="2" VerticalContentAlignment="Center" />
+                    <Button x:Name="RefreshButton" Grid.Row="1"
+                            ToolTip="Aktualisieren"
+                            Click="RefreshFileResultButton_Click" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" 
+                            Width="125" 
+                            Margin="5" 
+                            HorizontalContentAlignment="Left">
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                            <Image Source="/Includes/Refresh_light_024.png" HorizontalAlignment="Left" />
+                            <Label Content="Aktualisieren" VerticalContentAlignment="Center" Padding="5,0"/>
+                        </StackPanel>
+                    </Button>
 
-                <Label Content="Einheiten" 
-                       Grid.Column="4" VerticalContentAlignment="Center" Style="{DynamicResource gbxDetailsHintLabel}"/>
-                <Label Content="Koordinatensystem" 
-                       Grid.Column="4" 
-                       Grid.Row="2" VerticalContentAlignment="Center" Style="{DynamicResource gbxDetailsHintLabel}"/>
-                <Label x:Name="UnitsValueLabel" 
-                       Content="{Binding UnitsValue}" 
-                       Grid.Column="6" VerticalContentAlignment="Center"/>
-                <Label x:Name="CoordSysLabel" 
-                       Content="{Binding CoordSys}" 
-                       Grid.Column="6" 
-                       Grid.Row="2" VerticalContentAlignment="Center"/>
+                    <Label Content="DM-Infos:" Grid.Row="2"/>
 
-                <Label Content="Anzahl Gruppen" 
-                       Grid.Column="8" VerticalContentAlignment="Center" Style="{DynamicResource gbxDetailsHintLabel}"/>
-                <Label Content="Anzahl Layers" 
-                       Grid.Column="8" 
-                       Grid.Row="2" VerticalContentAlignment="Center" Style="{DynamicResource gbxDetailsHintLabel}"/>
-                <Label x:Name="CountGroupLabel" 
-                       Content="{Binding CountGroup}" 
-                       Grid.Column="10" VerticalContentAlignment="Center"/>
-                <Label x:Name="CountLayerLabel" 
-                       Content="{Binding CountLayer}"
-                       Grid.Column="10" 
-                       Grid.Row="2" VerticalContentAlignment="Center"/>
-            </Grid>
-        </GroupBox>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150*" />
+                            <ColumnDefinition Width="250*" />
+                        </Grid.ColumnDefinitions>
 
-        <GroupBox Header="Resultat" Grid.Row="3" Padding="3">
-            <Grid>
-                <TabControl>
-                    <TabItem Header="1-Klick-Wartung" d:IsHidden="True">
-                        <Grid>
+                        <Grid Grid.Column="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="4"/>
-                                <RowDefinition Height="26"/>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="30*"/>
                             </Grid.RowDefinitions>
-                            <ListView x:Name="OneClickListView" 
-                                      ItemsSource="{Binding OneClickTasks}"
+                            <Label Content="Name" Grid.Row="0"
+                                   VerticalContentAlignment="Center" 
+                                   Style="{DynamicResource gbxDetailsHintLabel}"/>
+
+                            <Label Content="TBDMMAP-Datei" Grid.Row="1"
+                                   VerticalContentAlignment="Center" 
+                                   Style="{DynamicResource gbxDetailsHintLabel}" />
+
+                            <Label Content="Einheiten" Grid.Row="2" 
+                                   VerticalContentAlignment="Center" 
+                                   Style="{DynamicResource gbxDetailsHintLabel}"/>
+
+                            <Label Content="Koordinatensystem" Grid.Row="3" 
+                                   VerticalContentAlignment="Center" 
+                                   Style="{DynamicResource gbxDetailsHintLabel}"/>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="30*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="TbdmFileName" Grid.Row="0"
+                                   Content="{Binding TbdmFileName}" 
+                                   VerticalContentAlignment="Center"/>
+
+                            <Label x:Name="TbdmmapFileName" Grid.Row="1"
+                                   Content="{Binding TbdmmapFileName}"  
+                                   VerticalContentAlignment="Center" />
+
+                            <Label x:Name="UnitsValueLabel" Grid.Row="2"
+                                   Content="{Binding UnitsValue}" 
+                                   VerticalContentAlignment="Center"/>
+
+                            <Label x:Name="CoordSysLabel" Grid.Row="3"
+                                   Content="{Binding CoordSys}"  
+                                   VerticalContentAlignment="Center" />
+
+                        </Grid>
+
+                    </Grid>
+
+
+                    <Label Content="Anzahl:" Grid.Row="5"/>
+
+                    <Grid Grid.Row="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150*" />
+                            <ColumnDefinition Width="250*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="30*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Content="Gruppen" Grid.Row="0"
+                                   VerticalContentAlignment="Center" 
+                                   Style="{DynamicResource gbxDetailsHintLabel}"/>
+
+                            <Label Content="Layers" Grid.Row="1" 
+                                   VerticalContentAlignment="Center" 
+                                   Style="{DynamicResource gbxDetailsHintLabel}"/>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="30*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="CountGroupLabel" Grid.Row="0"
+                                   Content="{Binding CountGroup}" 
+                                   VerticalContentAlignment="Center"/>
+
+                            <Label x:Name="CountLayerLabel" Grid.Row="1"
+                                   Content="{Binding CountLayer}"
+                                   VerticalContentAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+
+                    <Button x:Name="ExportCSVButton"
+                        ToolTip="Als CSV exportieren"
+                        Click="CreateCsvButton_Click" Grid.Row="8" 
+                            HorizontalAlignment="Right" 
+                            Width="125" 
+                            HorizontalContentAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Includes/FileExport_light_024.png" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Label Content="Export CSV" VerticalContentAlignment="Center" Padding="5,0"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+
+        <Grid x:Name="DmCheckOverview" Grid.Column="1">
+            <GroupBox x:Name="DataCheckGroupBox" Header="Prüfung" Padding="3">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="150*"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="150*"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Übersicht:" Grid.Row="0"/>
+
+                    <ListView x:Name="ExecutedChecksListView" Grid.Row="1"
+                                      ItemsSource="{Binding ExecutedChecks}"
                                       ButtonBase.Click="OneClickListViewSort_Click">
-                                <ListView.View>
-                                    <GridView AllowsColumnReorder="False">
-                                        <GridViewColumn Width="30">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <CheckBox IsChecked="{Binding IsActive}"
-                                                              IsEnabled="{Binding IsEnabled}"
-                                                              Width="16" 
-                                                              Height="16" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Width="45">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Image Width="16" 
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn Header="Resultat" Width="55">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Width="16" 
+                                                   Height="16" 
+                                                   ImageFailed="Image_IconImageFailed" 
+                                                   Source="{Binding IsOk, Converter={StaticResource BoolToImage}}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Prüfung" 
+                                                DisplayMemberBinding="{Binding Name}" 
+                                                Width="270"/>
+                                <GridViewColumn Header="Gesamt" 
+                                                DisplayMemberBinding="{Binding Count}" 
+                                                Width="55"/>
+                                <GridViewColumn Header="Fehler" 
+                                                DisplayMemberBinding="{Binding CountFaults}" 
+                                                Width="55"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Grid Grid.Row="2">
+                        <CheckBox x:Name="CheckOnlyTbdmmapCheckBox"
+                                      IsChecked="{Binding CheckOnlyTbdmmap}" 
+                                      Content="Nur TBDMMAP prüfen" 
+                                      HorizontalAlignment="Left" 
+                                      VerticalAlignment="Top" 
+                                      Margin="5,13,0,5"/>
+                    </Grid>
+
+                    <Label Content="Details:" Grid.Row="3"/>
+
+                    <ListView x:Name="OneClickListView" Grid.Row="4"
+                              ItemsSource="{Binding OneClickTasks}"
+                              ButtonBase.Click="OneClickListViewSort_Click">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn Width="30">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsActive}"
+                                                      IsEnabled="{Binding IsEnabled}"
+                                                      Width="16" 
+                                                      Height="16" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="45">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Width="16" 
                                                            Height="16" 
                                                            ImageFailed="Image_IconImageFailed" 
                                                            Source="{Binding IsFixed, Converter={StaticResource BoolToImage}}" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Beschreibung" 
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Beschreibung" 
                                                         DisplayMemberBinding="{Binding Text}" 
                                                         Width="320"/>
-                                        <GridViewColumn Header="Dateiablage" 
+                                <GridViewColumn Header="Dateiablage" 
                                                         DisplayMemberBinding="{Binding FileName}" 
                                                         Width="550"/>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
-                            <Image x:Name="selectAllImage" 
+                    <Grid Grid.Row="5">
+
+                        <Image x:Name="selectAllImage" 
                                    Source="/Includes/CheckAll_light_016.png" 
                                    Stretch="Fill" 
                                    VerticalAlignment="Center" 
@@ -209,8 +307,8 @@
                                    Width="16" 
                                    MouseLeftButtonDown="SelectAllImage_MouseLeftButtonDown"  
                                    Cursor="Hand" 
-                                   Height="16" Margin="10,6,0,4" Grid.Row="2" />
-                            <Image x:Name="deselectAllImage" 
+                                   Height="16" Margin="10,5,0,5" />
+                        <Image x:Name="deselectAllImage" 
                                    Source="/Includes/UncheckAll_light_016.png" 
                                    Stretch="Fill" 
                                    VerticalAlignment="Center"
@@ -218,57 +316,31 @@
                                    Width="16" 
                                    MouseLeftButtonDown="DeselectAllImage_MouseLeftButtonDown" 
                                    Cursor="Hand" 
-                                   Height="16" Margin="39,6,0,4" Grid.Row="2" />
-                            <CheckBox x:Name="CheckOnlyTbdmmapCheckBox"
-                                      IsChecked="{Binding CheckOnlyTbdmmap}" 
-                                      Content="Nur TBDMMAP prüfen" 
-                                      HorizontalAlignment="Left" 
-                                      VerticalAlignment="Top" 
-                                      Margin="105.5,6.901,0,0" Grid.Row="2"/>
-                            <Button x:Name="OneClickRunButton" 
-                                    Content="Bereinigen"
+                                   Height="16" Margin="39,5,0,5" />
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="7">
+                        
+                        <Button x:Name="OneClickRunButton" 
+                                    Content="Tbdm Bereinigen" 
+                                    HorizontalAlignment="Right" 
                                     Width="125"
-                                    Click="OneClickRunButton_Click" Grid.Row="2" HorizontalAlignment="Right"/>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="Datei-Vergleich">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="4"/>
-                                <RowDefinition Height="24"/>
-                            </Grid.RowDefinitions>
-                            <ListView x:Name="ComparedFilesListView"
-                                      ItemsSource="{Binding ComparedFiles}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                <ListView.View>
-                                    <GridView AllowsColumnReorder="False">
-                                        <GridViewColumn Width="30">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <CheckBox IsChecked="{Binding IsActive}"
-                                                              Width="16" 
-                                                              Height="16" />
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="TBDMMAP" 
-                                                        DisplayMemberBinding="{Binding TextFile}" 
-                                                        Width="320"/>
-                                        <GridViewColumn Header="Dateiablage" 
-                                                        DisplayMemberBinding="{Binding TextFolder}" 
-                                                        Width="550"/>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                            <Button x:Name="CleanComparedFilesButton" 
-                                    Content="Bereinigen" 
+                                    Margin="0,0,5,0"
+                                    Click="OneClickRunButton_Click"/>
+
+                        <Button x:Name="CleanComparedFilesButton" 
+                                    Content="Layer Bereinigen" 
                                     HorizontalAlignment="Right" 
                                     Width="125" 
-                                    Click="CleanComparedFilesButton_Click" Grid.Row="2"/>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
-            </Grid>
-        </GroupBox>
+                                    Margin="0,0,5,0"
+                                    Click="CleanComparedFilesButton_Click"/>
+                    </StackPanel>
+
+                </Grid>
+                
+                
+                
+            </GroupBox>
+        </Grid>
     </Grid>
 </UserControl>

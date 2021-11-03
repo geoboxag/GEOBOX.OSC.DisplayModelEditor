@@ -6,15 +6,15 @@ using GEOBOX.OSC.DisplayModelEditor.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
-using System.Windows.Media.Animation;
 using System.Xml;
 
 namespace GEOBOX.OSC.DisplayModelEditor.IO
 {
     class TbdmmapReader
     {
-        internal TbdmmapLayerHandler ReadTbdmmap(string filePath)
+        internal TbdmmapLayerHandler ReadTbdmmap(string filePath, ICollection<Check> executedChecks)
         {
             var item = new TbdmmapLayerHandler();
             XmlDocument xmlReadDoc = ReadTbdmmapFile(filePath);
@@ -23,14 +23,42 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                 MessageBox.Show("tbdmmap-Datei konnte nicht gelesen werden.");
                 return null;
             }
+
+            
             item.Units = GetFirstElementByTagNameOrDefault(xmlReadDoc, "Units");
+            if(string.IsNullOrEmpty(item.Units))
+            {
+                executedChecks?.Add(GetNewCheck("Einheit", false, 0, 1));
+            }
+            else
+            {
+                executedChecks?.Add(GetNewCheck("Einheit", true, 1, 0));
+            }
+
+
             item.CoordSystem = GetFirstElementByTagNameOrDefault(xmlReadDoc, "CoordinateSystem");
-            item.AddGroups(ReadGroups(xmlReadDoc.GetElementsByTagName("MapLayerGroup")));
-            item.AddMapLayers(ReadMapLayers(filePath, xmlReadDoc.GetElementsByTagName("DisplayModelMapLayer"), item));
+            if (string.IsNullOrEmpty(item.CoordSystem))
+            {
+                executedChecks?.Add(GetNewCheck("Koordinaten-System", false, 0, 1));
+            }
+            else
+            {
+                executedChecks?.Add(GetNewCheck("Koordinaten-System", true, 1, 0));
+            }
+
+
+            var mapLayerGroups = xmlReadDoc.GetElementsByTagName("MapLayerGroup");
+            item.AddGroups(ReadGroups(mapLayerGroups));
+
+            var displayModelMapLayers = xmlReadDoc.GetElementsByTagName("DisplayModelMapLayer");
+            item.AddMapLayers(ReadMapLayers(filePath, displayModelMapLayers, item, executedChecks));
+
+            //Check MapLayers
+            CheckMapLayerGroups(filePath, (List<LayerGroup>)item.GetGroups(), (List<TbdmmapItem>)item.GetMapLayers(), item, executedChecks);
 
             //Check tbdmmap
-            CheckViewPort(filePath, item, xmlReadDoc.GetElementsByTagName("LastViewport"));
-            CheckWindowStatus(filePath, item, xmlReadDoc.GetElementsByTagName("WindowStatus"));
+            CheckViewPort(filePath, item, xmlReadDoc.GetElementsByTagName("LastViewport"), executedChecks);
+            CheckWindowStatus(filePath, item, xmlReadDoc.GetElementsByTagName("WindowStatus"), executedChecks);
             return item;
         }
 
@@ -59,9 +87,11 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
             return groups;
         }
 
-        private IEnumerable<TbdmmapItem> ReadMapLayers(string filePath, XmlNodeList xmlNodesMapLayers, TbdmmapLayerHandler mapLayer)
+        private IEnumerable<TbdmmapItem> ReadMapLayers(string filePath, XmlNodeList xmlNodesMapLayers, TbdmmapLayerHandler mapLayer, ICollection<Check> executedChecks)
         {
             var list = new List<TbdmmapItem>();
+            int taskCounter = 0;
+
             foreach (XmlNode xmlNode in xmlNodesMapLayers)
             {
                 try
@@ -87,6 +117,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                     if (resourceCheck != null)
                     {
                         mapLayer.AddTask(resourceCheck);
+                        taskCounter++;
                     }
                 }
                 catch
@@ -95,29 +126,98 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                 }
             }
 
+            if (taskCounter > 0)
+            {
+                executedChecks?.Add(GetNewCheck($"Datasource: {Properties.Settings.Default.LayerDataSourceName}", false, list.Count, taskCounter));
+            }
+            else
+            {
+                executedChecks?.Add(GetNewCheck($"Datasource: {Properties.Settings.Default.LayerDataSourceName}", true, list.Count, taskCounter));
+            }
+
             return list;
         }
 
         private Task CheckFeatureSourceResourceID(string filePath, string text)
         {
-            if (!text.Equals("GBX_DEV_FA"))
+            if (!text.Equals(Properties.Settings.Default.LayerDataSourceName))
             {
-                return new Task(filePath, Resources.SetDatasource, TaskType.SetDatasource, TaskImage.ToDo);
+                return new Task(filePath, string.Format(Resources.SetDatasource, Properties.Settings.Default.LayerDataSourceName), TaskType.SetDatasource, TaskImage.ToDo);
             }
 
             return null;
         }
 
-        private void CheckViewPort(string filePath, TbdmmapLayerHandler mapLayer, XmlNodeList xmlNodesMapLayers)
+        private void CheckMapLayerGroups(string filePath, List<LayerGroup> groups, List<TbdmmapItem> mapLayers, TbdmmapLayerHandler mapLayerHandler, ICollection<Check> executedChecks)
         {
-            if (xmlNodesMapLayers.Count > 0)
+            int taskCounter = 0;
+            List<string> taskKeys = new List<string>();
+
+            foreach (var group in groups)
             {
-                mapLayer.AddTask(new Task(filePath, Resources.RemoveViewPort, TaskType.RemoveViewPort, TaskImage.ToDo));
+                var childGroup = groups.Find(g => g.Group != null && g.Group.Equals(group.Name));
+                var layer = mapLayers.Find(l => l.Group.Equals(group.Name));
+                if(childGroup is null && layer is null)
+                {
+                    var task = new Task(filePath, string.Format(Resources.RemoveUnusedLayerGroup, group.Name), TaskType.RemoveUnusedGroup, TaskImage.ToDo);
+                    mapLayerHandler.AddTask(task);
+                    taskKeys.Add(task.TaskKey);
+                    taskCounter++;
+                }
+            }
+
+            if (taskCounter > 0)
+            {
+                executedChecks?.Add(GetNewCheck("Layer-Gruppen im Tbdmmap", false, groups.Count, taskCounter, taskKeys));
+            }
+            else
+            {
+                executedChecks?.Add(GetNewCheck("Layer-Gruppen im Tbdmmap", true, groups.Count, taskCounter, taskKeys));
             }
         }
 
-        private void CheckWindowStatus(string filePath, TbdmmapLayerHandler mapLayer, XmlNodeList xmlNodesMapLayers)
+        private void CheckViewPort(string filePath, TbdmmapLayerHandler mapLayer, XmlNodeList xmlNodesMapLayers, ICollection<Check> executedChecks)
         {
+            List<string> taskKeys = new List<string>();
+
+            if (xmlNodesMapLayers.Count > 0)
+            {
+                var task = new Task(filePath, Resources.RemoveViewPort, TaskType.RemoveViewPort, TaskImage.ToDo);
+                mapLayer.AddTask(task);
+                taskKeys.Add(task.TaskKey);
+                executedChecks?.Add(GetNewCheck("Viewport", false, xmlNodesMapLayers.Count, xmlNodesMapLayers.Count, taskKeys));
+            }
+            else
+            {
+                executedChecks?.Add(GetNewCheck("Viewport", true, xmlNodesMapLayers.Count, xmlNodesMapLayers.Count, taskKeys));
+            }           
+        }
+
+        private Check GetNewCheck(string name, bool isOk, int count, int countFaults, List<string> taskKeys = null)
+        {
+            var check = new Check()
+            {
+                Name = name,
+                IsOk = isOk,
+                Count = count,
+                CountFaults = countFaults
+            };
+
+            if(taskKeys != null && taskKeys.Any())
+            {
+                foreach (var taskKey in taskKeys)
+                {
+                    check.AddTaskKey(taskKey);
+                }
+            }
+            return check;
+        }
+
+        private void CheckWindowStatus(string filePath, TbdmmapLayerHandler mapLayer, XmlNodeList xmlNodesMapLayers, ICollection<Check> executedChecks)
+        {
+            var taskCounter = 0;
+            List<string> taskKeys = new List<string>();
+
             foreach (XmlNode node in xmlNodesMapLayers)
             {
                 if (node == null)
@@ -130,14 +230,28 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                    !node["Width"].InnerXml.Equals("100") ||
                    !node["Height"].InnerXml.Equals("105"))
                 {
-                    mapLayer.AddTask(new Task(filePath, Resources.SetWindowState, TaskType.SetWindowState, TaskImage.ToDo));
+                    var task = new Task(filePath, Resources.SetWindowState, TaskType.SetWindowState, TaskImage.ToDo);
+                    mapLayer.AddTask(task);
+                    taskKeys.Add(task.TaskKey);
+                    taskCounter++;
                 }
             }
+
+            if(taskCounter > 0)
+            {
+                executedChecks?.Add(GetNewCheck("WindowStatus", false, xmlNodesMapLayers.Count, taskCounter, taskKeys));
+            }
+            else
+            {
+                executedChecks?.Add(GetNewCheck("WindowStatus", true, xmlNodesMapLayers.Count, taskCounter, taskKeys));
+            }
+
         }
 
         #region 1-Click-Maintenance-Tasks
         internal void SetWindowState(Task task, string filePath)
         {
+            bool isSaved = false;
             try
             {
                 XmlDocument xDoc = ReadTbdmmapFile(filePath);
@@ -157,19 +271,23 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                         xNode["Width"].InnerXml = "100";
                         xNode["Height"].InnerXml = "105";
                         xNode["WindowState"].InnerXml = "Maximized";
-                        SaveTbdmapFile(filePath, xDoc);
                     }
                 }
-                task.SetImage(TaskImage.Done);
+
+                isSaved = SaveTbdmapFile(filePath, xDoc);
+
+                SetTaskStatus(isSaved, task);
+                xDoc = null;
             }
             catch
             {
-                task.SetImage(TaskImage.Warning);
+                SetTaskStatus(isSaved, task);
             }
         }
 
         internal void DeleteViewPort(Task task, string filePath)
         {
+            bool isSaved = false;
             try
             {
                 XmlDocument doc = ReadTbdmmapFile(filePath);
@@ -188,19 +306,20 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                     parent.RemoveChild(child);
                 }
 
-                SaveTbdmapFile(filePath, doc);
-                doc = null;
+                isSaved = SaveTbdmapFile(filePath, doc);
 
-                task.SetImage(TaskImage.Done);
+                SetTaskStatus(isSaved, task);
+                doc = null;
             }
             catch
             {
-                task.SetImage(TaskImage.Warning);
+                SetTaskStatus(isSaved, task);
             }
         }
 
         internal void ResetDataSource(Task task, string filePath)
         {
+            bool isSaved = false;
             try
             {
                 XmlDocument doc = ReadTbdmmapFile(filePath);
@@ -217,14 +336,14 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
 
                 var result = new ResetDataSourceCorrectionTask().Apply(new CorrectionTaskContext(ReadTbdmmapFile(filePath))).DocumentAfterCorrection;
 
-                SaveTbdmapFile(filePath, result);
-                //doc = null;
+                isSaved = SaveTbdmapFile(filePath, result);
 
-                task.SetImage(TaskImage.Done);
+                SetTaskStatus(isSaved, task);
+                //doc = null;
             }
             catch
             {
-                task.SetImage(TaskImage.Warning);
+                SetTaskStatus(isSaved, task);
             }
         }
         #endregion
@@ -250,9 +369,69 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
             }
         }
 
-        private void SaveTbdmapFile(string filePath, XmlDocument xDoc)
+        private bool SaveTbdmapFile(string filePath, XmlDocument xDoc)
         {
-            xDoc.Save(filePath);
+            try
+            {
+                xDoc.Save(filePath);
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show(
+                    "Die Datei ist mit einem Schreibschutz versehen." + Environment.NewLine +
+                    "Entfernen Sie den Schreibschutz und wiederholen sie den Vorgang." + Environment.NewLine +
+                    Environment.NewLine + "Datei:" + Environment.NewLine +
+                    $"{filePath}",
+                    "Speichern fehlgeschlagen", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            catch (Exception) { /* Do nothing */ return false; }
+
+        }
+
+
+        internal void DeleteMapLayerGroup(Task task, string filePath)
+        {
+            bool isSaved = false;
+            try
+            {
+                XmlDocument doc = ReadTbdmmapFile(filePath);
+                XmlNodeList displayModelMapNodes = doc.GetElementsByTagName("DisplayModelMap");
+
+                foreach (var displayModelMapNode in displayModelMapNodes)
+                {
+                    XmlNode parent = (XmlNode)displayModelMapNode;
+                    XmlNodeList childs = parent?.SelectNodes("./MapLayerGroup");
+                    
+                    foreach(var child in childs)
+                    {
+                        XmlNode childToRemove = null;
+
+                        XmlNode node = (XmlNode)child;
+                        string name = node["Name"].InnerText;
+
+                        if (task.Text.Contains(name))
+                        {
+                            childToRemove = node;
+                        }
+
+                        if(childToRemove != null)
+                        {
+                            parent.RemoveChild(childToRemove);
+                        }                 
+                    }                 
+                }
+
+                isSaved = SaveTbdmapFile(filePath, doc);
+
+                SetTaskStatus(isSaved, task);
+                doc = null;
+            }
+            catch
+            {
+                SetTaskStatus(isSaved, task);
+            }
         }
 
         /// <summary>
@@ -273,5 +452,25 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
 
             return firstItem.InnerText;
         }
+
+
+        private void SetTaskStatus(bool isSaved, Task task)
+        {
+            if (isSaved)
+            {
+                task.IsFixed = true;
+                task.IsActive = false;
+                task.IsEnabled = false;
+                task.SetImage(TaskImage.Done);
+            }
+            else
+            {
+                task.IsFixed = false;
+                task.IsActive = true;
+                task.IsEnabled = true;
+                task.SetImage(TaskImage.Warning);
+            }
+        }
+
     }
 }

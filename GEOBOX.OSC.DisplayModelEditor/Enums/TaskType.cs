@@ -8,6 +8,7 @@
         SetWindowState,
         RemoveViewPort,
         SetAttributes,
-        LayerNotFound
+        LayerNotFound,
+        RemoveUnusedGroup
     }
 }

@@ -115,6 +115,15 @@ namespace GEOBOX.OSC.DisplayModelEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unbenutzte Gruppe &quot;{0}&quot; entfernen (TBDMMAP).
+        /// </summary>
+        public static string RemoveUnusedLayerGroup {
+            get {
+                return ResourceManager.GetString("RemoveUnusedLayerGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entferne ViewPort (TBDMMAP)..
         /// </summary>
         public static string RemoveViewPort {
@@ -133,7 +142,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setzte Datensource auf &quot;GBX_DEV_FA&quot; (TBDMMAP)..
+        ///   Looks up a localized string similar to Setzte Datasource auf &quot;{0}&quot; (TBDMMAP)..
         /// </summary>
         public static string SetDatasource {
             get {
@@ -142,7 +151,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setzte WindowsStatus (TBDMMAP)..
+        ///   Looks up a localized string similar to Setzte WindowStatus (TBDMMAP)..
         /// </summary>
         public static string SetWindowState {
             get {

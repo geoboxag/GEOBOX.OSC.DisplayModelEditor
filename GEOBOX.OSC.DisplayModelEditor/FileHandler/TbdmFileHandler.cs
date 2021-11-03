@@ -19,10 +19,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.FileHandler
             this.basePath = basePath;
         }
 
-        internal void Read()
+        internal void Read(ICollection<Check> executedChecks = null)
         {
             LoadTbdm();
-            LoadTbdmmap();
+            LoadTbdmmap(executedChecks);
         }
 
         internal TbdmItemHandler GetTbdmmapItem()
@@ -42,14 +42,14 @@ namespace GEOBOX.OSC.DisplayModelEditor.FileHandler
             list.Add(reader.ReadTbdm(filePath));
         }
 
-        private void LoadTbdmmap()
+        private void LoadTbdmmap(ICollection<Check> executedChecks)
         {
             tbdmmapFileHandler = new TbdmmapFileHandler(basePath);
             foreach (var tbdm in list)
             {
                 foreach (var tbdmmap in tbdm.GetTbdmmaps())
                 {
-                    tbdmmapFileHandler.Load(tbdmmap);
+                    tbdmmapFileHandler.Load(tbdmmap, executedChecks);
                 }
             }
         }

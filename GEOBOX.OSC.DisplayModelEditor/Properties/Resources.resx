@@ -135,6 +135,10 @@
   <data name="RemoveFilter" xml:space="preserve">
     <value>Filter entfernen (Layers).</value>
   </data>
+  <data name="RemoveUnusedLayerGroup" xml:space="preserve">
+    <value>Unbenutzte Gruppe "{0}" entfernen (TBDMMAP)</value>
+    <comment>0 = Name der Gruppe</comment>
+  </data>
   <data name="RemoveViewPort" xml:space="preserve">
     <value>Entferne ViewPort (TBDMMAP).</value>
   </data>
@@ -142,9 +146,10 @@
     <value>Setzte Datasource, Username und Viewport (Layers)</value>
   </data>
   <data name="SetDatasource" xml:space="preserve">
-    <value>Setzte Datensource auf "GBX_DEV_FA" (TBDMMAP).</value>
+    <value>Setzte Datasource auf "{0}" (TBDMMAP).</value>
+    <comment>0 = FeatureSourceResourceId</comment>
   </data>
   <data name="SetWindowState" xml:space="preserve">
-    <value>Setzte WindowsStatus (TBDMMAP).</value>
+    <value>Setzte WindowStatus (TBDMMAP).</value>
   </data>
 </root>
