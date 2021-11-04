@@ -115,11 +115,11 @@ namespace GEOBOX.OSC.DisplayModelEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unbenutzte Gruppe &quot;{0}&quot; entfernen (TBDMMAP).
+        ///   Looks up a localized string similar to Unbenutzte Layer-Gruppen entfernen (TBDMMAP).
         /// </summary>
-        public static string RemoveUnusedLayerGroup {
+        public static string RemoveUnusedLayerGroups {
             get {
-                return ResourceManager.GetString("RemoveUnusedLayerGroup", resourceCulture);
+                return ResourceManager.GetString("RemoveUnusedLayerGroups", resourceCulture);
             }
         }
         

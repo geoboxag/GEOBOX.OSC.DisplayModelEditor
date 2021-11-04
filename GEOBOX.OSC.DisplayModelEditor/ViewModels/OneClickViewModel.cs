@@ -1,6 +1,5 @@
 ﻿using GEOBOX.OSC.DisplayModelEditor.DAL;
 using GEOBOX.OSC.DisplayModelEditor.FileHandler;
-using GEOBOX.OSC.DisplayModelEditor.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +13,6 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
 {
     public sealed class OneClickViewModel : INotifyPropertyChanged
     {
-        private SettingsController settingsController = new SettingsController();
         private TbdmFileHandler tbdmFileHandler;
         private List<MissingLayer> layersToDelete;
         private string sortColumnName = string.Empty;

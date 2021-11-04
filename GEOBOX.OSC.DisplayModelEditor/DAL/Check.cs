@@ -71,8 +71,11 @@ namespace GEOBOX.OSC.DisplayModelEditor.DAL
 
         internal void RemoveTaskKey(string taskKey)
         {
-            if(TaskKeys.Remove(taskKey))
+            var foundTasksKeys = TaskKeys.FindAll(k => k.Contains(taskKey));
+
+            foreach (var foundTasksKey in foundTasksKeys)
             {
+                TaskKeys.Remove(foundTasksKey);
                 CountFaults = CountFaults - 1;
             }
 
@@ -80,6 +83,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.DAL
             {
                 IsOk = true;
             }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

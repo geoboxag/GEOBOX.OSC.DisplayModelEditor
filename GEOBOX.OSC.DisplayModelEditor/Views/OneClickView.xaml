@@ -8,6 +8,7 @@
              mc:Ignorable="d" Background="White" Height="655" Width="965">
     <UserControl.Resources>
         <converters:BoolToImage x:Key="BoolToImage" />
+        <converters:EmptyStringToHyphen x:Key="EmptyStringToHyphen" />
     </UserControl.Resources>
     <Grid x:Name="ContentGrid">
         <Grid.ColumnDefinitions>
@@ -131,19 +132,19 @@
                             </Grid.RowDefinitions>
 
                             <Label x:Name="TbdmFileName" Grid.Row="0"
-                                   Content="{Binding TbdmFileName}" 
+                                   Content="{Binding TbdmFileName, Converter={StaticResource EmptyStringToHyphen}}" 
                                    VerticalContentAlignment="Center"/>
 
                             <Label x:Name="TbdmmapFileName" Grid.Row="1"
-                                   Content="{Binding TbdmmapFileName}"  
+                                   Content="{Binding TbdmmapFileName, Converter={StaticResource EmptyStringToHyphen}}"  
                                    VerticalContentAlignment="Center" />
 
                             <Label x:Name="UnitsValueLabel" Grid.Row="2"
-                                   Content="{Binding UnitsValue}" 
+                                   Content="{Binding UnitsValue, Converter={StaticResource EmptyStringToHyphen}}" 
                                    VerticalContentAlignment="Center"/>
 
                             <Label x:Name="CoordSysLabel" Grid.Row="3"
-                                   Content="{Binding CoordSys}"  
+                                   Content="{Binding CoordSys, Converter={StaticResource EmptyStringToHyphen}}"  
                                    VerticalContentAlignment="Center" />
 
                         </Grid>
@@ -181,11 +182,11 @@
                             </Grid.RowDefinitions>
 
                             <Label x:Name="CountGroupLabel" Grid.Row="0"
-                                   Content="{Binding CountGroup}" 
+                                   Content="{Binding CountGroup, Converter={StaticResource EmptyStringToHyphen}}" 
                                    VerticalContentAlignment="Center"/>
 
                             <Label x:Name="CountLayerLabel" Grid.Row="1"
-                                   Content="{Binding CountLayer}"
+                                   Content="{Binding CountLayer, Converter={StaticResource EmptyStringToHyphen}}"
                                    VerticalContentAlignment="Center"/>
                         </Grid>
                     </Grid>

@@ -135,9 +135,8 @@
   <data name="RemoveFilter" xml:space="preserve">
     <value>Filter entfernen (Layers).</value>
   </data>
-  <data name="RemoveUnusedLayerGroup" xml:space="preserve">
-    <value>Unbenutzte Gruppe "{0}" entfernen (TBDMMAP)</value>
-    <comment>0 = Name der Gruppe</comment>
+  <data name="RemoveUnusedLayerGroups" xml:space="preserve">
+    <value>Unbenutzte Layer-Gruppen entfernen (TBDMMAP)</value>
   </data>
   <data name="RemoveViewPort" xml:space="preserve">
     <value>Entferne ViewPort (TBDMMAP).</value>

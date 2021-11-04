@@ -71,7 +71,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.DAL
             this.FileName = filename;
         }
 
-        public string TaskKey => $"{this.Tag}_{this.FileName}_{this.Text}";
+        public string TaskKey => $"{this.Tag}_{this.FileName}";
 
         private int GetImageIndex(TaskImage ti)
         {

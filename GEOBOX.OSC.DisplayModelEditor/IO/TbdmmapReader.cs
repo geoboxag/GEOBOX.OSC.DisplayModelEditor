@@ -91,6 +91,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
         {
             var list = new List<TbdmmapItem>();
             int taskCounter = 0;
+            List<string> taskKeys = new List<string>();
 
             foreach (XmlNode xmlNode in xmlNodesMapLayers)
             {
@@ -117,6 +118,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                     if (resourceCheck != null)
                     {
                         mapLayer.AddTask(resourceCheck);
+                        taskKeys.Add(resourceCheck.TaskKey);
                         taskCounter++;
                     }
                 }
@@ -128,11 +130,11 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
 
             if (taskCounter > 0)
             {
-                executedChecks?.Add(GetNewCheck($"Datasource: {Properties.Settings.Default.LayerDataSourceName}", false, list.Count, taskCounter));
+                executedChecks?.Add(GetNewCheck($"Datasource: {Properties.Settings.Default.LayerDataSourceName}", false, list.Count, taskCounter, taskKeys));
             }
             else
             {
-                executedChecks?.Add(GetNewCheck($"Datasource: {Properties.Settings.Default.LayerDataSourceName}", true, list.Count, taskCounter));
+                executedChecks?.Add(GetNewCheck($"Datasource: {Properties.Settings.Default.LayerDataSourceName}", true, list.Count, taskCounter, taskKeys));
             }
 
             return list;
@@ -159,7 +161,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                 var layer = mapLayers.Find(l => l.Group.Equals(group.Name));
                 if(childGroup is null && layer is null)
                 {
-                    var task = new Task(filePath, string.Format(Resources.RemoveUnusedLayerGroup, group.Name), TaskType.RemoveUnusedGroup, TaskImage.ToDo);
+                    var task = new Task(filePath, Resources.RemoveUnusedLayerGroups, TaskType.RemoveUnusedGroup, TaskImage.ToDo);
                     mapLayerHandler.AddTask(task);
                     taskKeys.Add(task.TaskKey);
                     taskCounter++;
@@ -274,7 +276,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                     }
                 }
 
-                isSaved = SaveTbdmapFile(filePath, xDoc);
+                isSaved = SaveTbdmmapFile(filePath, xDoc);
 
                 SetTaskStatus(isSaved, task);
                 xDoc = null;
@@ -306,7 +308,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                     parent.RemoveChild(child);
                 }
 
-                isSaved = SaveTbdmapFile(filePath, doc);
+                isSaved = SaveTbdmmapFile(filePath, doc);
 
                 SetTaskStatus(isSaved, task);
                 doc = null;
@@ -336,7 +338,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
 
                 var result = new ResetDataSourceCorrectionTask().Apply(new CorrectionTaskContext(ReadTbdmmapFile(filePath))).DocumentAfterCorrection;
 
-                isSaved = SaveTbdmapFile(filePath, result);
+                isSaved = SaveTbdmmapFile(filePath, result);
 
                 SetTaskStatus(isSaved, task);
                 //doc = null;
@@ -369,7 +371,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
             }
         }
 
-        private bool SaveTbdmapFile(string filePath, XmlDocument xDoc)
+        private bool SaveTbdmmapFile(string filePath, XmlDocument xDoc)
         {
             try
             {
@@ -402,28 +404,41 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                 foreach (var displayModelMapNode in displayModelMapNodes)
                 {
                     XmlNode parent = (XmlNode)displayModelMapNode;
-                    XmlNodeList childs = parent?.SelectNodes("./MapLayerGroup");
+                    XmlNodeList mapLayerGroups = parent?.SelectNodes("./MapLayerGroup");
                     
-                    foreach(var child in childs)
+                    foreach(var mapLayerGroup in mapLayerGroups)
                     {
-                        XmlNode childToRemove = null;
+                        XmlNode mapLayerGroupNode = (XmlNode)mapLayerGroup;
+                        bool childHasChildren = false;
+                        XmlNode mapLayerGroupToRemove = null;
+                        string name = mapLayerGroupNode["Name"].InnerText;
 
-                        XmlNode node = (XmlNode)child;
-                        string name = node["Name"].InnerText;
-
-                        if (task.Text.Contains(name))
+                        foreach (var child in mapLayerGroups)
                         {
-                            childToRemove = node;
+                            if (child.Equals(mapLayerGroup))
+                            {
+                                continue;
+                            }
+
+                            XmlNode childNode = (XmlNode)child;
+                            mapLayerGroupToRemove = mapLayerGroupNode;
+
+                            if (childNode["Name"].InnerText.Contains(name))
+                            {
+                                childHasChildren = true;
+                                mapLayerGroupToRemove = null;
+                                break;
+                            }
                         }
 
-                        if(childToRemove != null)
+                        if (!childHasChildren && mapLayerGroupToRemove != null)
                         {
-                            parent.RemoveChild(childToRemove);
-                        }                 
+                            parent?.RemoveChild(mapLayerGroupToRemove);
+                        }
                     }                 
                 }
 
-                isSaved = SaveTbdmapFile(filePath, doc);
+                isSaved = SaveTbdmmapFile(filePath, doc);
 
                 SetTaskStatus(isSaved, task);
                 doc = null;

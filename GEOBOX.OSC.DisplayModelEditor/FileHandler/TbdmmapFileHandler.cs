@@ -75,9 +75,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.FileHandler
 
         internal void Run1ClickTask(string taskName, string filename)
         {
-            var tasks = GetAllTasks().ToList().FindAll(item => item.FileName.Equals(filename) && item.Tag.ToString().Equals(taskName));
+            var task = GetAllTasks().ToList()
+                .Find(item => item.FileName.Equals(filename) && item.Tag.ToString().Equals(taskName));
 
-            if (tasks == null || !tasks.Any())
+            if (task == null)
             {
                 return;
             }
@@ -85,38 +86,31 @@ namespace GEOBOX.OSC.DisplayModelEditor.FileHandler
             var tbdmmapReader = new TbdmmapReader();
             var layerReader = new LayerReader();
 
-            foreach(var task in tasks)
+            switch (taskName)
             {
-                if(!task.IsActive)
-                {
-                    continue;
-                }
-
-                switch (taskName)
-                {
-                    case "SetDatasource":
-                        tbdmmapReader.ResetDataSource(task, filename);
-                        break;
-                    case "SetWindowState":
-                        tbdmmapReader.SetWindowState(task, filename);
-                        break;
-                    case "RemoveViewPort":
-                        tbdmmapReader.DeleteViewPort(task, filename);
-                        break;
-                    case "RemoveUnusedGroup":
-                        tbdmmapReader.DeleteMapLayerGroup(task, filename);
-                        break;
-                    case "RemoveExtendedData":
-                        layerReader.DeleteExtendedData(task, filename);
-                        break;
-                    case "RemoveFilter":
-                        layerReader.DeleteFilterNodes(task, filename);
-                        break;
-                    case "SetAttributes":
-                        layerReader.ChangeLayerAttributes(task, filename);
-                        break;
-                }
+                case "SetDatasource":
+                    tbdmmapReader.ResetDataSource(task, filename);
+                    break;
+                case "SetWindowState":
+                    tbdmmapReader.SetWindowState(task, filename);
+                    break;
+                case "RemoveViewPort":
+                    tbdmmapReader.DeleteViewPort(task, filename);
+                    break;
+                case "RemoveUnusedGroup":
+                    tbdmmapReader.DeleteMapLayerGroup(task, filename);
+                    break;
+                case "RemoveExtendedData":
+                    layerReader.DeleteExtendedData(task, filename);
+                    break;
+                case "RemoveFilter":
+                    layerReader.DeleteFilterNodes(task, filename);
+                    break;
+                case "SetAttributes":
+                    layerReader.ChangeLayerAttributes(task, filename);
+                    break;
             }
+
         }
 
         internal void CreateCsv(string path)
