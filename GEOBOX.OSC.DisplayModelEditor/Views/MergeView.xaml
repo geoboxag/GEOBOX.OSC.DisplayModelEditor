@@ -50,7 +50,7 @@
                 <TextBlock x:Name="TbdmFilePathOne"
                          TextWrapping="Wrap"
                          VerticalAlignment="Center"
-                         Text=""
+                         Text="- kein Darstellungsmodell gewählt"
                          IsManipulationEnabled="false" 
                          Grid.Column="1" />
 
@@ -67,7 +67,7 @@
                 <TextBlock x:Name="TbdmFilePathTwo" 
                          TextWrapping="Wrap"
                          VerticalAlignment="Center"
-                         Text=""
+                         Text="- kein Darstellungsmodell gewählt"
                          IsManipulationEnabled="false" 
                          Grid.Row="2" 
                          Grid.Column="1"/>
@@ -84,7 +84,7 @@
                 <TextBlock x:Name="SaveMergedFilePath" 
                          TextWrapping="Wrap"
                          VerticalAlignment="Center"
-                         Text=""
+                         Text="- kein Speicherort gewählt"
                          IsManipulationEnabled="false"
                          Grid.Row="6" 
                          Grid.Column="1"/>

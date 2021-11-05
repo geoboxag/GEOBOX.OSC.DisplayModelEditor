@@ -123,8 +123,8 @@ namespace GEOBOX.OSC.DisplayModelEditor.Views
 
         private void ClearDisplayModelInputFields_Click(object sender, RoutedEventArgs e)
         {
-            TbdmFilePathOne.Text = "";
-            TbdmFilePathTwo.Text = "";
+            TbdmFilePathOne.Text = "- kein Darstellungsmodell geöffnet";
+            TbdmFilePathTwo.Text = "- kein Darstellungsmodell geöffnet";
         }
 
         private void SelectMergedFilePathButton_Click(object sender, RoutedEventArgs e)

@@ -108,7 +108,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                     item.ExpandInLegend = Convert.ToBoolean(maplayer["ExpandInLegend"].InnerText);
                     item.Visible = Convert.ToBoolean(maplayer["Visible"].InnerText);
                     item.Group = maplayer["Group"].InnerText;
-                    item.Order = Convert.ToInt16(maplayer["Order"].InnerText);
+                    item.Order = Convert.ToInt16(maplayer["Order"]?.InnerText);
                     item.FeatureSourceResourceId = featureSourceResourceId.InnerText;
 
                     list.Add(item);
@@ -403,39 +403,60 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
 
                 foreach (var displayModelMapNode in displayModelMapNodes)
                 {
-                    XmlNode parent = (XmlNode)displayModelMapNode;
-                    XmlNodeList mapLayerGroups = parent?.SelectNodes("./MapLayerGroup");
-                    
-                    foreach(var mapLayerGroup in mapLayerGroups)
+                    XmlNode rootElement = (XmlNode)displayModelMapNode;
+                    XmlNodeList mapLayerGroups = rootElement?.SelectNodes("./MapLayerGroup");
+                    XmlNodeList mapLayers = rootElement?.SelectNodes("./DisplayModelMapLayer/MapLayer");
+                    List<XmlNode> layerGroupsToRemove = new List<XmlNode>();
+
+                    foreach (var mapLayerGroup in mapLayerGroups)
                     {
                         XmlNode mapLayerGroupNode = (XmlNode)mapLayerGroup;
                         bool childHasChildren = false;
-                        XmlNode mapLayerGroupToRemove = null;
-                        string name = mapLayerGroupNode["Name"].InnerText;
+                        XmlNode mapLayerGroupToRemove = mapLayerGroupNode;
+                        string mapLayerGroupNodeName = mapLayerGroupNode["Name"].InnerText;
 
                         foreach (var child in mapLayerGroups)
                         {
+                            XmlNode childNode = (XmlNode)child;
+
                             if (child.Equals(mapLayerGroup))
                             {
                                 continue;
                             }
 
-                            XmlNode childNode = (XmlNode)child;
-                            mapLayerGroupToRemove = mapLayerGroupNode;
-
-                            if (childNode["Name"].InnerText.Contains(name))
+                            if (childNode["Name"].InnerText.Equals(mapLayerGroupNodeName))
                             {
                                 childHasChildren = true;
-                                mapLayerGroupToRemove = null;
+                                break;
+                            }
+                        }
+
+                        foreach (var child in mapLayers)
+                        {
+                            if (childHasChildren)
+                            {
+                                break;
+                            }
+
+                            XmlNode childNode = (XmlNode)child;
+
+                            if (childNode["Group"].InnerText.Equals(mapLayerGroupNodeName))
+                            {
+                                childHasChildren = true;
                                 break;
                             }
                         }
 
                         if (!childHasChildren && mapLayerGroupToRemove != null)
                         {
-                            parent?.RemoveChild(mapLayerGroupToRemove);
+                            layerGroupsToRemove.Add(mapLayerGroupToRemove);
                         }
-                    }                 
+                    }
+
+                    foreach (var layerGroupToRemove in layerGroupsToRemove)
+                    {
+                        rootElement?.RemoveChild(layerGroupToRemove);
+                    }
                 }
 
                 isSaved = SaveTbdmmapFile(filePath, doc);
