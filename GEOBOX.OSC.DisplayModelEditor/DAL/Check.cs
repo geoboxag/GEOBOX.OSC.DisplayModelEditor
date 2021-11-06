@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using GEOBOX.OSC.DisplayModelEditor.Enums;
+using GEOBOX.OSC.DisplayModelEditor.Properties;
 
 namespace GEOBOX.OSC.DisplayModelEditor.DAL
 {
@@ -69,12 +71,22 @@ namespace GEOBOX.OSC.DisplayModelEditor.DAL
             TaskKeys.Add(taskKey);
         }
 
-        internal void RemoveTaskKey(string taskKey)
+        /// <summary>
+        /// Remove a TaskKey and decrements the <see cref="CountFaults"/>
+        /// </summary>
+        /// <param name="taskKey"></param>
+        /// <param name="decrementCount">true for decrementing <see cref="Count"/></param>
+        internal void RemoveTaskKey(string taskKey, bool decrementCount)
         {
             var foundTasksKeys = TaskKeys.FindAll(k => k.Contains(taskKey));
 
             foreach (var foundTasksKey in foundTasksKeys)
             {
+                if (decrementCount)
+                {
+                    Count = Count - 1;
+                }
+
                 TaskKeys.Remove(foundTasksKey);
                 CountFaults = CountFaults - 1;
             }
@@ -84,6 +96,16 @@ namespace GEOBOX.OSC.DisplayModelEditor.DAL
                 IsOk = true;
             }
 
+        }
+
+        internal bool IsDecrementCountNecessary(string taskKey)
+        {
+            if (taskKey.Contains(TaskType.RemoveUnusedGroup.ToString()))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

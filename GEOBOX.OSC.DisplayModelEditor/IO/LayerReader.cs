@@ -4,6 +4,7 @@ using GEOBOX.OSC.DisplayModelEditor.FileHandler;
 using GEOBOX.OSC.DisplayModelEditor.Properties;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
@@ -27,7 +28,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
             }
             catch
             {
-                list.Add(new Task(string.Empty, Resources.LayersNotFound, TaskType.LayerNotFound, TaskImage.ToDo) { IsEnabled = false });
+                list.Add(new Task(filePath, Resources.LayerNotFound, TaskType.LayerNotFound, TaskImage.ToDo) { IsEnabled = false });
                 MissingLayerHandler.AddMissingLayer(new MissingLayer(filePath, MissingLayer.Tag.File));
             }
 

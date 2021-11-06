@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Forms;
+using GEOBOX.OSC.DisplayModelEditor.Enums;
+using GEOBOX.OSC.DisplayModelEditor.Properties;
 
 namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
 {
@@ -20,12 +22,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         public ICollectionView MaintenanceTasksView { get; private set; }
 
         private ObservableCollection<Check> executedChecks = new ObservableCollection<Check>();
+
         public ObservableCollection<Check> ExecutedChecks
         {
-            get
-            {
-                return executedChecks;
-            }
+            get { return executedChecks; }
             private set
             {
                 executedChecks = value;
@@ -34,12 +34,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private ObservableCollection<Task> oneClickTasks;
+
         public ObservableCollection<Task> OneClickTasks
         {
-            get
-            {
-                return oneClickTasks;
-            }
+            get { return oneClickTasks; }
             private set
             {
                 oneClickTasks = value;
@@ -48,12 +46,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private ObservableCollection<MissingLayer> comparedFiles;
+
         public ObservableCollection<MissingLayer> ComparedFiles
         {
-            get
-            {
-                return comparedFiles;
-            }
+            get { return comparedFiles; }
             private set
             {
                 comparedFiles = value;
@@ -62,12 +58,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private string basePath;
+
         public string BasePath
         {
-            get
-            {
-                return basePath;
-            }
+            get { return basePath; }
             set
             {
                 basePath = value;
@@ -76,12 +70,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private string tbdmFileName;
+
         public string TbdmFileName
         {
-            get
-            {
-                return tbdmFileName;
-            }
+            get { return tbdmFileName; }
             set
             {
                 tbdmFileName = value;
@@ -90,12 +82,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private string tbdmFilePath;
+
         public string TbdmFilePath
         {
-            get
-            {
-                return tbdmFilePath;
-            }
+            get { return tbdmFilePath; }
             set
             {
                 tbdmFilePath = value;
@@ -104,12 +94,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private string tbdmmapFileName;
+
         public string TbdmmapFileName
         {
-            get
-            {
-                return tbdmmapFileName;
-            }
+            get { return tbdmmapFileName; }
             set
             {
                 tbdmmapFileName = value;
@@ -118,12 +106,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private string countGroup;
+
         public string CountGroup
         {
-            get
-            {
-                return countGroup;
-            }
+            get { return countGroup; }
             set
             {
                 countGroup = value;
@@ -132,12 +118,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private string countLayer;
+
         public string CountLayer
         {
-            get
-            {
-                return countLayer;
-            }
+            get { return countLayer; }
             set
             {
                 countLayer = value;
@@ -146,12 +130,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private string coordSys;
+
         public string CoordSys
         {
-            get
-            {
-                return coordSys;
-            }
+            get { return coordSys; }
             set
             {
                 coordSys = value;
@@ -160,12 +142,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private string unitsValue;
+
         public string UnitsValue
         {
-            get
-            {
-                return unitsValue;
-            }
+            get { return unitsValue; }
             set
             {
                 unitsValue = value;
@@ -174,12 +154,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private string compareCount;
+
         public string CompareCount
         {
-            get
-            {
-                return compareCount;
-            }
+            get { return compareCount; }
             set
             {
                 compareCount = value;
@@ -188,12 +166,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private bool checkOnlyTbdmmap;
+
         public bool CheckOnlyTbdmmap
         {
-            get
-            {
-                return checkOnlyTbdmmap;
-            }
+            get { return checkOnlyTbdmmap; }
             set
             {
                 checkOnlyTbdmmap = value;
@@ -202,12 +178,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private Button oneClickRunButton;
+
         public Button OneClickRunButton
         {
-            get
-            {
-                return oneClickRunButton;
-            }
+            get { return oneClickRunButton; }
             set
             {
                 oneClickRunButton = value;
@@ -216,12 +190,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
         }
 
         private Button removeMissingLayersButton;
+
         public Button RemoveMissingLayersButton
         {
-            get
-            {
-                return removeMissingLayersButton;
-            }
+            get { return removeMissingLayersButton; }
             set
             {
                 removeMissingLayersButton = value;
@@ -239,7 +211,8 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Meldung beim lesen der TBDM-Datei:{Environment.NewLine}{ex.Message}", "Hopperla...", MessageBoxButtons.OK);
+                MessageBox.Show($"Meldung beim lesen der TBDM-Datei:{Environment.NewLine}{ex.Message}", "Hopperla...",
+                    MessageBoxButtons.OK);
                 return;
             }
 
@@ -248,9 +221,12 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             TbdmFileName = Path.GetFileName(TbdmFilePath);
             TbdmmapFileName = tbdmFileHandler.GetTbdmmapItem().GetName();
             UnitsValue = tbdmFileHandler.GetTbdmmapController().GetItems().Select(item => item.Units).FirstOrDefault();
-            CoordSys = tbdmFileHandler.GetTbdmmapController().GetItems().Select(item => item.CoordSystem).FirstOrDefault();
-            CountGroup = tbdmFileHandler.GetTbdmmapController().GetItems().SelectMany(item => item.GetGroups()).Count().ToString();
-            CountLayer = tbdmFileHandler.GetTbdmmapController().GetItems().SelectMany(item => item.GetMapLayers()).Count().ToString();
+            CoordSys = tbdmFileHandler.GetTbdmmapController().GetItems().Select(item => item.CoordSystem)
+                .FirstOrDefault();
+            CountGroup = tbdmFileHandler.GetTbdmmapController().GetItems().SelectMany(item => item.GetGroups()).Count()
+                .ToString();
+            CountLayer = tbdmFileHandler.GetTbdmmapController().GetItems().SelectMany(item => item.GetMapLayers())
+                .Count().ToString();
 
             if (!CheckOnlyTbdmmap)
             {
@@ -262,13 +238,15 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
                     {
                         missingLayer.IsActive = true;
                     }
+
                     ComparedFiles.Add(missingLayer);
                 }
+
                 CompareCount = MissingLayerHandler.GetCount().ToString();
                 SetButtonState();
             }
         }
-        
+
         public void CreateCsvFile(string filename)
         {
             tbdmFileHandler.GetTbdmmapController().CreateCsv(filename);
@@ -276,7 +254,7 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
 
         public void SelectAllTasksInOneClickListView()
         {
-            if(OneClickTasks != null)
+            if (OneClickTasks != null)
             {
                 foreach (var oneClickTask in OneClickTasks)
                 {
@@ -363,9 +341,10 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
                     oneClickTasks.Add(task);
                 }
             }
+
             MaintenanceTasksView = CollectionViewSource.GetDefaultView(OneClickTasks);
         }
-        
+
         public TbdmmapFileHandler GetTbdmmapController()
         {
             return tbdmFileHandler.GetTbdmmapController();
@@ -377,7 +356,26 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
             {
                 if (check.TaskKeys.Contains(taskKey))
                 {
-                    check.RemoveTaskKey(taskKey);
+                    int taskKeyCount = check.TaskKeys.FindAll(t => t.Equals(taskKey)).Count;
+                    bool isDecrementCountNecessary = check.IsDecrementCountNecessary(taskKey);
+                    check.RemoveTaskKey(taskKey, isDecrementCountNecessary);
+
+                    if (isDecrementCountNecessary)
+                    {
+                        
+                        UpdateDisplayModelInformation(taskKey, taskKeyCount);
+                    }
+                }
+            }
+        }
+
+        private void UpdateDisplayModelInformation(string taskKey, int taskKeyCount)
+        {
+            if (taskKey.Contains(TaskType.RemoveUnusedGroup.ToString()))
+            {
+                if (int.TryParse(CountGroup, out int count))
+                {
+                    CountGroup = (count - taskKeyCount).ToString();
                 }
             }
         }
@@ -393,12 +391,13 @@ namespace GEOBOX.OSC.DisplayModelEditor.ViewModels
                     layersToDelete.Add(missingLayer);
                 }
             }
+
             RemoveLayersToDelete();
         }
 
         private void RemoveLayersToDelete()
         {
-            foreach(MissingLayer missingLayer in layersToDelete)
+            foreach (MissingLayer missingLayer in layersToDelete)
             {
                 ComparedFiles.Remove(missingLayer);
             }

@@ -79,11 +79,11 @@ namespace GEOBOX.OSC.DisplayModelEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Einige Layerfiles wurden nicht gefunden....
+        ///   Looks up a localized string similar to Layerdatei nicht gefunden.
         /// </summary>
-        public static string LayersNotFound {
+        public static string LayerNotFound {
             get {
-                return ResourceManager.GetString("LayersNotFound", resourceCulture);
+                return ResourceManager.GetString("LayerNotFound", resourceCulture);
             }
         }
         

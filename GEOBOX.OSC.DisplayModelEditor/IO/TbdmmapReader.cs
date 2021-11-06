@@ -4,6 +4,7 @@ using GEOBOX.OSC.DisplayModelEditor.Enums;
 using GEOBOX.OSC.DisplayModelEditor.FileHandler;
 using GEOBOX.OSC.DisplayModelEditor.Properties;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -424,7 +425,12 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                                 continue;
                             }
 
-                            if (childNode["Name"].InnerText.Equals(mapLayerGroupNodeName))
+                            if (!childNode.InnerXml.Contains("Group"))
+                            {
+                                continue;
+                            }
+
+                            if (childNode["Group"].InnerText.Equals(mapLayerGroupNodeName))
                             {
                                 childHasChildren = true;
                                 break;
@@ -439,6 +445,11 @@ namespace GEOBOX.OSC.DisplayModelEditor.IO
                             }
 
                             XmlNode childNode = (XmlNode)child;
+
+                            if (!childNode.InnerXml.Contains("Group"))
+                            {
+                                continue;
+                            }
 
                             if (childNode["Group"].InnerText.Equals(mapLayerGroupNodeName))
                             {

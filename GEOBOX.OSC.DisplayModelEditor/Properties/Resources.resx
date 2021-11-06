@@ -123,8 +123,8 @@
   <data name="genModulName" xml:space="preserve">
     <value>GEOBOX Darstellungsmodell Editor</value>
   </data>
-  <data name="LayersNotFound" xml:space="preserve">
-    <value>Einige Layerfiles wurden nicht gefunden...</value>
+  <data name="LayerNotFound" xml:space="preserve">
+    <value>Layerdatei nicht gefunden</value>
   </data>
   <data name="NotAvailable" xml:space="preserve">
     <value>N.A.</value>
