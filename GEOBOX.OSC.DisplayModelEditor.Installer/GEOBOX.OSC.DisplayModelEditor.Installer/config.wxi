@@ -11,9 +11,10 @@
   <?define Source_Banner="..\..\_images\Banner.jpg"?>
   <!--Angaben zum Installer -->
   <?define Version="!(bind.FileVersion.FILE_DME_DisplayModelEditor_exe)"?>
-  <?define year="2022"?>
+  <?define year="2024"?>
   <?define MinDotNetVersion="4.8"?>
-  <?define ProductGUID="3D97E22C-3AB8-43A7-A6E5-CB117CB80C40"?>
+  <!-- Ändern für neue Version -->
+  <?define ProductGUID="97449C66-D131-4892-8838-CA02C88BF5F9"?>
   <?define UpgradeGUID="CE740517-C736-45E5-8813-847F986208E0"?>
   <!--Icon-->
   <?define Product_Icon="geobox.ico"?>

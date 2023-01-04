@@ -27,7 +27,7 @@
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <OutputPath>C:\_repos_GIT\GEOBOX.OSC.DisplayModelEditor\_output\</OutputPath>
+    <OutputPath>C:\_repos\GEOBOX.OSC.DisplayModelEditor\_output\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Lang=de;</DefineConstants>
     <WixVariables>Platform=x64</WixVariables>
